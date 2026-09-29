@@ -1,0 +1,15 @@
+# ⚙️  GENERATED — не редактировать руками.
+# Источник истины: design-system/tokens/cameo-*.toml + zed-icons-map.toml
+# Пересобрать:     python3 build_zed_icons.py --out <dir>
+
+id = "cameo-icons"
+name = "Cameo Icons"
+version = "1.1.0"
+schema_version = 1
+description = "Cameo icon theme for Zed — the same roles as the terminal. Recoloured from Catppuccin Icons (MIT)."
+authors = ["Sergey Zhechko"]
+repository = "https://github.com/wood-bison/dot-files"
+
+# Явный список: Zed автодополняет его сканом каталога, только
+# когда ключа нет. Пишем явно — как это делает апстрим.
+icon_themes = ["icon_themes/cameo-icons.json"]

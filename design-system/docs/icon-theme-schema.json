@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "IconThemeFamilyContent",
+  "type": "object",
+  "required": [
+    "author",
+    "name",
+    "themes"
+  ],
+  "properties": {
+    "author": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "themes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/IconThemeContent"
+      }
+    }
+  },
+  "definitions": {
+    "AppearanceContent": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark"
+      ]
+    },
+    "ChevronIconsContent": {
+      "type": "object",
+      "properties": {
+        "collapsed": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/String"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expanded": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/String"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "DirectoryIconsContent": {
+      "type": "object",
+      "properties": {
+        "collapsed": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/String"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expanded": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/String"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "IconDefinitionContent": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/definitions/String"
+        }
+      }
+    },
+    "IconThemeContent": {
+      "type": "object",
+      "required": [
+        "appearance",
+        "name"
+      ],
+      "properties": {
+        "appearance": {
+          "$ref": "#/definitions/AppearanceContent"
+        },
+        "chevron_icons": {
+          "default": {
+            "collapsed": null,
+            "expanded": null
+          },
+          "allOf": [
+            {
+              "$ref": "#/definitions/ChevronIconsContent"
+            }
+          ]
+        },
+        "directory_icons": {
+          "default": {
+            "collapsed": null,
+            "expanded": null
+          },
+          "allOf": [
+            {
+              "$ref": "#/definitions/DirectoryIconsContent"
+            }
+          ]
+        },
+        "file_icons": {
+          "default": {},
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/IconDefinitionContent"
+          }
+        },
+        "file_stems": {
+          "default": {},
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "file_suffixes": {
+          "default": {},
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "String": {
+      "type": "string"
+    }
+  }
+}

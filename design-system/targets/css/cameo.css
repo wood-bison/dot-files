@@ -1,0 +1,184 @@
+/* ══════════════════════════════════════════════════
+   🎨 Cameo — CSS custom properties (light + dark)
+   ══════════════════════════════════════════════════
+
+   ⚙️  GENERATED — не редактировать руками.
+   Источник истины: design-system/tokens/cameo-light.toml
+                    design-system/tokens/cameo-dark.toml
+   Пересобрать:     python3 design-system/build.py design-system/tokens/cameo-light.toml --out ~/dotfiles
+                    (или со второй палитрой — файл выйдет байт в байт тот же)
+
+   Три состояния темы:
+     :root                             — полная СВЕТЛАЯ палитра;
+     @media (prefers-color-scheme: dark)
+       :root:not([data-theme="light"]) — системная тёмная, но явный
+                                         светлый тумблер её перебивает;
+     :root[data-theme="dark"]          — явный тёмный тумблер выигрывает
+                                         и у системы, и у media.
+
+   В каждом блоке ОДИН И ТОТ ЖЕ набор из 42 переменных
+   (26 ролей + 16 ANSI). Ни одна не объявлена только
+   внутри media/[data-theme]: иначе у темы по умолчанию её бы
+   просто не было. Тёмные блоки переопределяют ТОЛЬКО токены
+   (и color-scheme — он не токен, а подсказка браузеру про
+   скроллбары и системные контролы).
+
+   Имя переменной = имя роли, подчёркивания → дефисы:
+     bg_soft → --cameo-bg-soft
+
+   Файл самодостаточен: подключается как есть, ничего
+   не импортирует. Значения — литеральные HEX, а не var()-
+   ссылки, чтобы любой слот читался в одно чтение.
+*/
+
+/* ── Cameo Light — база ── */
+:root {
+  color-scheme: light;
+
+  --cameo-bg: #fcf6ec;                      /* terminal.background — тёплая бумага */
+  --cameo-ink: #1f1815;                     /* ansi black — тёмные чернила */
+  --cameo-bg-soft: #f6efe2;                 /* приглушённая подложка (yazi which-mask) */
+  --cameo-bg-elev: #f3ebdb;                 /* приподнятая поверхность (yazi tabs / mode alt) */
+  --cameo-muted: #9d8567;                   /* рамки промпта (Cameo border) */
+  --cameo-fg: #2a211c;                      /* foreground — чернила */
+  --cameo-cream: #171210;                   /* максимальный акцент текста (fzf fg+) */
+  --cameo-subtle: #7c6260;                  /* autosuggest, low-emphasis */
+  --cameo-dim: #7a6a58;                     /* комментарии, lock/log (ansi bright black) */
+  --cameo-faint: #8b756c;                   /* symlink target (yazi) — держать ΔE ≥ 6 от dim и subtle, гейт это НЕ проверяет */
+  --cameo-gold: #805e00;                    /* курсор, yazi accent */
+  --cameo-sand: #845f2e;                    /* prompt ❯, info */
+  --cameo-sand-lt: #66491a;                 /* bright yellow — на светлом «ярче» значит темнее */
+  --cameo-terra: #a84a26;                   /* error, pointer, executable */
+  --cameo-terra-lt: #8c3216;                /* bright red */
+  --cameo-olive: #5d6d22;                   /* success, scripts */
+  --cameo-olive-lt: #46590f;                /* directories */
+  --cameo-rose: #a83f60;                    /* time (Cameo syntax rose) */
+  --cameo-rose-lt: #8a2545;                 /* bright magenta */
+  --cameo-moon: #4459a0;                    /* git branch (Cameo periwinkle) */
+  --cameo-moon-lt: #2f427e;                 /* bright blue */
+  --cameo-teal: #356e5e;                    /* cyan — тил */
+  --cameo-teal-lt: #215449;                 /* bright cyan */
+  --cameo-sel: #e5d9c2;                     /* selection background */
+  --cameo-paper: #574d45;                   /* ansi white — тёплый камень (это ТЕКСТ, не поверхность) */
+  --cameo-paper-lt: #171210;                /* ansi bright white — плотнейшая тушь (на бумаге ярче = темнее) */
+
+  /* ── ANSI 0–15 ── */
+  --cameo-ansi-0: #1f1815;                  /* ink */
+  --cameo-ansi-1: #a84a26;                  /* terra */
+  --cameo-ansi-2: #5d6d22;                  /* olive */
+  --cameo-ansi-3: #845f2e;                  /* sand */
+  --cameo-ansi-4: #4459a0;                  /* moon */
+  --cameo-ansi-5: #a83f60;                  /* rose */
+  --cameo-ansi-6: #356e5e;                  /* teal */
+  --cameo-ansi-7: #574d45;                  /* paper */
+  --cameo-ansi-8: #7a6a58;                  /* dim */
+  --cameo-ansi-9: #8c3216;                  /* terra_lt */
+  --cameo-ansi-10: #46590f;                 /* olive_lt */
+  --cameo-ansi-11: #66491a;                 /* sand_lt */
+  --cameo-ansi-12: #2f427e;                 /* moon_lt */
+  --cameo-ansi-13: #8a2545;                 /* rose_lt */
+  --cameo-ansi-14: #215449;                 /* teal_lt */
+  --cameo-ansi-15: #171210;                 /* paper_lt */
+}
+
+/* ── Cameo Dark — системная тёмная ── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --cameo-bg: #1d1818;
+    --cameo-ink: #1a1714;
+    --cameo-bg-soft: #231d1d;
+    --cameo-bg-elev: #3a302c;
+    --cameo-muted: #8b6665;
+    --cameo-fg: #f3ede7;
+    --cameo-cream: #fef7eb;
+    --cameo-subtle: #b1a1a0;
+    --cameo-dim: #9b8d80;
+    --cameo-faint: #8a7d78;
+    --cameo-gold: #c8a24a;
+    --cameo-sand: #dba87a;
+    --cameo-sand-lt: #fac99d;
+    --cameo-terra: #d47a59;
+    --cameo-terra-lt: #f89470;
+    --cameo-olive: #a8b870;
+    --cameo-olive-lt: #cfdc9a;
+    --cameo-rose: #dba9b8;
+    --cameo-rose-lt: #f7c5d4;
+    --cameo-moon: #9db3ea;
+    --cameo-moon-lt: #bdcfff;
+    --cameo-teal: #76a696;
+    --cameo-teal-lt: #99c8b7;
+    --cameo-sel: #503b3a;
+    --cameo-paper: #e3dcd2;
+    --cameo-paper-lt: #fef7eb;
+
+    /* ── ANSI 0–15 ── */
+    --cameo-ansi-0: #1a1714;
+    --cameo-ansi-1: #d47a59;
+    --cameo-ansi-2: #a8b870;
+    --cameo-ansi-3: #dba87a;
+    --cameo-ansi-4: #9db3ea;
+    --cameo-ansi-5: #dba9b8;
+    --cameo-ansi-6: #76a696;
+    --cameo-ansi-7: #e3dcd2;
+    --cameo-ansi-8: #9b8d80;
+    --cameo-ansi-9: #f89470;
+    --cameo-ansi-10: #cfdc9a;
+    --cameo-ansi-11: #fac99d;
+    --cameo-ansi-12: #bdcfff;
+    --cameo-ansi-13: #f7c5d4;
+    --cameo-ansi-14: #99c8b7;
+    --cameo-ansi-15: #fef7eb;
+  }
+}
+
+/* ── Cameo Dark — явный тумблер ── */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --cameo-bg: #1d1818;
+  --cameo-ink: #1a1714;
+  --cameo-bg-soft: #231d1d;
+  --cameo-bg-elev: #3a302c;
+  --cameo-muted: #8b6665;
+  --cameo-fg: #f3ede7;
+  --cameo-cream: #fef7eb;
+  --cameo-subtle: #b1a1a0;
+  --cameo-dim: #9b8d80;
+  --cameo-faint: #8a7d78;
+  --cameo-gold: #c8a24a;
+  --cameo-sand: #dba87a;
+  --cameo-sand-lt: #fac99d;
+  --cameo-terra: #d47a59;
+  --cameo-terra-lt: #f89470;
+  --cameo-olive: #a8b870;
+  --cameo-olive-lt: #cfdc9a;
+  --cameo-rose: #dba9b8;
+  --cameo-rose-lt: #f7c5d4;
+  --cameo-moon: #9db3ea;
+  --cameo-moon-lt: #bdcfff;
+  --cameo-teal: #76a696;
+  --cameo-teal-lt: #99c8b7;
+  --cameo-sel: #503b3a;
+  --cameo-paper: #e3dcd2;
+  --cameo-paper-lt: #fef7eb;
+
+  /* ── ANSI 0–15 ── */
+  --cameo-ansi-0: #1a1714;
+  --cameo-ansi-1: #d47a59;
+  --cameo-ansi-2: #a8b870;
+  --cameo-ansi-3: #dba87a;
+  --cameo-ansi-4: #9db3ea;
+  --cameo-ansi-5: #dba9b8;
+  --cameo-ansi-6: #76a696;
+  --cameo-ansi-7: #e3dcd2;
+  --cameo-ansi-8: #9b8d80;
+  --cameo-ansi-9: #f89470;
+  --cameo-ansi-10: #cfdc9a;
+  --cameo-ansi-11: #fac99d;
+  --cameo-ansi-12: #bdcfff;
+  --cameo-ansi-13: #f7c5d4;
+  --cameo-ansi-14: #99c8b7;
+  --cameo-ansi-15: #fef7eb;
+}

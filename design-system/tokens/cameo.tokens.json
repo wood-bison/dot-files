@@ -1,0 +1,811 @@
+{
+  "$generated": {
+    "tool": "palette-build — design-system/build.py",
+    "sources": [
+      "design-system/tokens/cameo-light.toml",
+      "design-system/tokens/cameo-dark.toml"
+    ],
+    "rebuild": "python3 design-system/build.py design-system/tokens/cameo-light.toml --out ~/dotfiles",
+    "note": "Машиночитаемый экспорт пары. Timestamp не пишется намеренно: файл байт-стабилен между прогонами. Не редактировать руками — правь tokens/*.toml и пересобирай.",
+    "contrast": "WCAG 2.x relative luminance; contrast_on_bg измерен против ghostty.background своей темы, min — объявленный порог гейта"
+  },
+  "family": "cameo",
+  "roles": [
+    "bg",
+    "ink",
+    "bg_soft",
+    "bg_elev",
+    "muted",
+    "fg",
+    "cream",
+    "subtle",
+    "dim",
+    "faint",
+    "gold",
+    "sand",
+    "sand_lt",
+    "terra",
+    "terra_lt",
+    "olive",
+    "olive_lt",
+    "rose",
+    "rose_lt",
+    "moon",
+    "moon_lt",
+    "teal",
+    "teal_lt",
+    "sel",
+    "paper",
+    "paper_lt"
+  ],
+  "themes": {
+    "cameo-light": {
+      "name": "cameo-light",
+      "label": "Cameo Light",
+      "mode": "light",
+      "twin": "cameo-dark",
+      "opacity": 1.0,
+      "source": "tokens/cameo-light.toml",
+      "surfaces": {
+        "background": {
+          "role": "bg",
+          "hex": "#fcf6ec"
+        },
+        "foreground": {
+          "role": "fg",
+          "hex": "#2a211c"
+        },
+        "cursor-color": {
+          "role": "gold",
+          "hex": "#805e00"
+        },
+        "cursor-text": {
+          "role": "bg",
+          "hex": "#fcf6ec"
+        },
+        "selection-background": {
+          "role": "sel",
+          "hex": "#e5d9c2"
+        },
+        "selection-foreground": {
+          "role": "fg",
+          "hex": "#2a211c"
+        },
+        "search-background": {
+          "role": "sel",
+          "hex": "#e5d9c2"
+        },
+        "search-foreground": {
+          "role": "fg",
+          "hex": "#2a211c"
+        },
+        "search-selected-background": {
+          "role": "sand",
+          "hex": "#845f2e"
+        },
+        "search-selected-foreground": {
+          "role": "bg",
+          "hex": "#fcf6ec"
+        }
+      },
+      "roles": {
+        "bg": {
+          "hex": "#fcf6ec",
+          "sh": "EA_BG",
+          "note": "terminal.background — тёплая бумага",
+          "alias_of": null,
+          "on": null,
+          "min": null,
+          "contrast_on_bg": 1.0
+        },
+        "ink": {
+          "hex": "#1f1815",
+          "sh": "EA_INK",
+          "note": "ansi black — тёмные чернила",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 16.28
+        },
+        "bg_soft": {
+          "hex": "#f6efe2",
+          "sh": "EA_BG_SOFT",
+          "note": "приглушённая подложка (yazi which-mask)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.0,
+          "contrast_on_bg": 1.06
+        },
+        "bg_elev": {
+          "hex": "#f3ebdb",
+          "sh": "EA_BG_ELEV",
+          "note": "приподнятая поверхность (yazi tabs / mode alt)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.0,
+          "contrast_on_bg": 1.1
+        },
+        "muted": {
+          "hex": "#9d8567",
+          "sh": "EA_MUTED",
+          "note": "рамки промпта (Cameo border)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.2,
+          "contrast_on_bg": 3.26
+        },
+        "fg": {
+          "hex": "#2a211c",
+          "sh": "EA_FG",
+          "note": "foreground — чернила",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 14.66
+        },
+        "cream": {
+          "hex": "#171210",
+          "sh": "EA_CREAM",
+          "note": "максимальный акцент текста (fzf fg+)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 17.28
+        },
+        "subtle": {
+          "hex": "#7c6260",
+          "sh": "EA_SUBTLE",
+          "note": "autosuggest, low-emphasis",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.18
+        },
+        "dim": {
+          "hex": "#7a6a58",
+          "sh": "EA_DIM",
+          "note": "комментарии, lock/log (ansi bright black)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 2.5,
+          "contrast_on_bg": 4.85
+        },
+        "faint": {
+          "hex": "#8b756c",
+          "sh": "EA_FAINT",
+          "note": "symlink target (yazi) — держать ΔE ≥ 6 от dim и subtle, гейт это НЕ проверяет",
+          "alias_of": null,
+          "on": "bg",
+          "min": 2.5,
+          "contrast_on_bg": 4.02
+        },
+        "gold": {
+          "hex": "#805e00",
+          "sh": "EA_GOLD",
+          "note": "курсор, yazi accent",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.55
+        },
+        "sand": {
+          "hex": "#845f2e",
+          "sh": "EA_SAND",
+          "note": "prompt ❯, info",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.34
+        },
+        "sand_lt": {
+          "hex": "#66491a",
+          "sh": "EA_SAND_LT",
+          "note": "bright yellow — на светлом «ярче» значит темнее",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.71
+        },
+        "terra": {
+          "hex": "#a84a26",
+          "sh": "EA_TERRA",
+          "note": "error, pointer, executable",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.32
+        },
+        "terra_lt": {
+          "hex": "#8c3216",
+          "sh": "EA_TERRA_LT",
+          "note": "bright red",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.56
+        },
+        "olive": {
+          "hex": "#5d6d22",
+          "sh": "EA_OLIVE",
+          "note": "success, scripts",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.31
+        },
+        "olive_lt": {
+          "hex": "#46590f",
+          "sh": "EA_OLIVE_LT",
+          "note": "directories",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.24
+        },
+        "rose": {
+          "hex": "#a83f60",
+          "sh": "EA_ROSE",
+          "note": "time (Cameo syntax rose)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.51
+        },
+        "rose_lt": {
+          "hex": "#8a2545",
+          "sh": "EA_ROSE_LT",
+          "note": "bright magenta",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.03
+        },
+        "moon": {
+          "hex": "#4459a0",
+          "sh": "EA_MOON",
+          "note": "git branch (Cameo periwinkle)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 6.14
+        },
+        "moon_lt": {
+          "hex": "#2f427e",
+          "sh": "EA_MOON_LT",
+          "note": "bright blue",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.87
+        },
+        "teal": {
+          "hex": "#356e5e",
+          "sh": "EA_TEAL",
+          "note": "cyan — тил",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.51
+        },
+        "teal_lt": {
+          "hex": "#215449",
+          "sh": "EA_TEAL_LT",
+          "note": "bright cyan",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.04
+        },
+        "sel": {
+          "hex": "#e5d9c2",
+          "sh": "EA_SEL",
+          "note": "selection background",
+          "alias_of": null,
+          "on": null,
+          "min": null,
+          "contrast_on_bg": 1.3
+        },
+        "paper": {
+          "hex": "#574d45",
+          "sh": null,
+          "note": "ansi white — тёплый камень (это ТЕКСТ, не поверхность)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.65
+        },
+        "paper_lt": {
+          "hex": "#171210",
+          "sh": null,
+          "note": "ansi bright white — плотнейшая тушь (на бумаге ярче = темнее)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 17.28
+        }
+      },
+      "ansi": [
+        {
+          "index": 0,
+          "role": "ink",
+          "hex": "#1f1815",
+          "note": "black — тёмные чернила (на светлой теме это текст)"
+        },
+        {
+          "index": 1,
+          "role": "terra",
+          "hex": "#a84a26",
+          "note": "red — терракот, затемнённый под бумагу"
+        },
+        {
+          "index": 2,
+          "role": "olive",
+          "hex": "#5d6d22",
+          "note": "green — оливк, затемнённый под бумагу"
+        },
+        {
+          "index": 3,
+          "role": "sand",
+          "hex": "#845f2e",
+          "note": "yellow — охра (жёлтый на бумаге обязан быть тёмным)"
+        },
+        {
+          "index": 4,
+          "role": "moon",
+          "hex": "#4459a0",
+          "note": "blue — барвинок, ушедший в индиго"
+        },
+        {
+          "index": 5,
+          "role": "rose",
+          "hex": "#a83f60",
+          "note": "magenta — роза, ушедшая в сливу"
+        },
+        {
+          "index": 6,
+          "role": "teal",
+          "hex": "#356e5e",
+          "note": "cyan — тил"
+        },
+        {
+          "index": 7,
+          "role": "paper",
+          "hex": "#574d45",
+          "note": "white — светлая бумага"
+        },
+        {
+          "index": 8,
+          "role": "dim",
+          "hex": "#7a6a58",
+          "note": "bright black — серый комментарий"
+        },
+        {
+          "index": 9,
+          "role": "terra_lt",
+          "hex": "#8c3216",
+          "note": "bright red"
+        },
+        {
+          "index": 10,
+          "role": "olive_lt",
+          "hex": "#46590f",
+          "note": "bright green"
+        },
+        {
+          "index": 11,
+          "role": "sand_lt",
+          "hex": "#66491a",
+          "note": "bright yellow"
+        },
+        {
+          "index": 12,
+          "role": "moon_lt",
+          "hex": "#2f427e",
+          "note": "bright blue"
+        },
+        {
+          "index": 13,
+          "role": "rose_lt",
+          "hex": "#8a2545",
+          "note": "bright magenta"
+        },
+        {
+          "index": 14,
+          "role": "teal_lt",
+          "hex": "#215449",
+          "note": "bright cyan"
+        },
+        {
+          "index": 15,
+          "role": "paper_lt",
+          "hex": "#171210",
+          "note": "bright white"
+        }
+      ]
+    },
+    "cameo-dark": {
+      "name": "cameo-dark",
+      "label": "Cameo Dark",
+      "mode": "dark",
+      "twin": "cameo-light",
+      "opacity": 0.95,
+      "source": "tokens/cameo-dark.toml",
+      "surfaces": {
+        "background": {
+          "role": "bg",
+          "hex": "#1d1818"
+        },
+        "foreground": {
+          "role": "fg",
+          "hex": "#f3ede7"
+        },
+        "cursor-color": {
+          "role": "gold",
+          "hex": "#c8a24a"
+        },
+        "cursor-text": {
+          "role": "bg",
+          "hex": "#1d1818"
+        },
+        "selection-background": {
+          "role": "sel",
+          "hex": "#503b3a"
+        },
+        "selection-foreground": {
+          "role": "fg",
+          "hex": "#f3ede7"
+        },
+        "search-background": {
+          "role": "sel",
+          "hex": "#503b3a"
+        },
+        "search-foreground": {
+          "role": "fg",
+          "hex": "#f3ede7"
+        },
+        "search-selected-background": {
+          "role": "sand",
+          "hex": "#dba87a"
+        },
+        "search-selected-foreground": {
+          "role": "bg",
+          "hex": "#1d1818"
+        }
+      },
+      "roles": {
+        "bg": {
+          "hex": "#1d1818",
+          "sh": "EA_BG",
+          "note": "terminal.background",
+          "alias_of": null,
+          "on": null,
+          "min": null,
+          "contrast_on_bg": 1.0
+        },
+        "ink": {
+          "hex": "#1a1714",
+          "sh": "EA_INK",
+          "note": "ansi black — тёплый near-bg",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.0,
+          "contrast_on_bg": 1.02
+        },
+        "bg_soft": {
+          "hex": "#231d1d",
+          "sh": "EA_BG_SOFT",
+          "note": "приглушённая подложка (yazi which-mask)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.0,
+          "contrast_on_bg": 1.06
+        },
+        "bg_elev": {
+          "hex": "#3a302c",
+          "sh": "EA_BG_ELEV",
+          "note": "приподнятая поверхность (yazi tabs / mode alt)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.0,
+          "contrast_on_bg": 1.37
+        },
+        "muted": {
+          "hex": "#8b6665",
+          "sh": "EA_MUTED",
+          "note": "рамки промпта (Cameo border)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 1.2,
+          "contrast_on_bg": 3.5
+        },
+        "fg": {
+          "hex": "#f3ede7",
+          "sh": "EA_FG",
+          "note": "foreground — кремовый",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 15.11
+        },
+        "cream": {
+          "hex": "#fef7eb",
+          "sh": "EA_CREAM",
+          "note": "bright — совсем светлый",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 16.49
+        },
+        "subtle": {
+          "hex": "#b1a1a0",
+          "sh": "EA_SUBTLE",
+          "note": "autosuggest, low-emphasis (Cameo text.muted)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.09
+        },
+        "dim": {
+          "hex": "#9b8d80",
+          "sh": "EA_DIM",
+          "note": "комментарии, lock/log (ansi bright black)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 2.5,
+          "contrast_on_bg": 5.45
+        },
+        "faint": {
+          "hex": "#8a7d78",
+          "sh": "EA_FAINT",
+          "note": "symlink target (yazi) — 4.42 намеренно: подъём до 5.90 сближал его с dim (ΔE 6.9 → 4.5)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 2.5,
+          "contrast_on_bg": 4.42
+        },
+        "gold": {
+          "hex": "#c8a24a",
+          "sh": "EA_GOLD",
+          "note": "курсор, yazi accent (syntax emphasis)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.29
+        },
+        "sand": {
+          "hex": "#dba87a",
+          "sh": "EA_SAND",
+          "note": "prompt ❯, info",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.27
+        },
+        "sand_lt": {
+          "hex": "#fac99d",
+          "sh": "EA_SAND_LT",
+          "note": "bright yellow",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 11.63
+        },
+        "terra": {
+          "hex": "#d47a59",
+          "sh": "EA_TERRA",
+          "note": "error, pointer, executable",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 5.62
+        },
+        "terra_lt": {
+          "hex": "#f89470",
+          "sh": "EA_TERRA_LT",
+          "note": "bright red",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 7.91
+        },
+        "olive": {
+          "hex": "#a8b870",
+          "sh": "EA_OLIVE",
+          "note": "success, scripts",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.16
+        },
+        "olive_lt": {
+          "hex": "#cfdc9a",
+          "sh": "EA_OLIVE_LT",
+          "note": "directories",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 12.0
+        },
+        "rose": {
+          "hex": "#dba9b8",
+          "sh": "EA_ROSE",
+          "note": "time (Cameo syntax rose)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.68
+        },
+        "rose_lt": {
+          "hex": "#f7c5d4",
+          "sh": "EA_ROSE_LT",
+          "note": "bright magenta — светлая тёплая роза",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 11.61
+        },
+        "moon": {
+          "hex": "#9db3ea",
+          "sh": "EA_MOON",
+          "note": "git branch (Cameo periwinkle)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 8.42
+        },
+        "moon_lt": {
+          "hex": "#bdcfff",
+          "sh": "EA_MOON_LT",
+          "note": "bright blue",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 11.31
+        },
+        "teal": {
+          "hex": "#76a696",
+          "sh": "EA_TEAL",
+          "note": "cyan — тил (Cameo ansi blue)",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 6.41
+        },
+        "teal_lt": {
+          "hex": "#99c8b7",
+          "sh": "EA_TEAL_LT",
+          "note": "bright cyan",
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 9.45
+        },
+        "sel": {
+          "hex": "#503b3a",
+          "sh": "EA_SEL",
+          "note": "selection background",
+          "alias_of": null,
+          "on": null,
+          "min": null,
+          "contrast_on_bg": 1.7
+        },
+        "paper": {
+          "hex": "#e3dcd2",
+          "sh": null,
+          "note": null,
+          "alias_of": null,
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 12.9
+        },
+        "paper_lt": {
+          "hex": "#fef7eb",
+          "sh": "EA_CREAM",
+          "note": "bright — совсем светлый",
+          "alias_of": "cream",
+          "on": "bg",
+          "min": 4.5,
+          "contrast_on_bg": 16.49
+        }
+      },
+      "ansi": [
+        {
+          "index": 0,
+          "role": "ink",
+          "hex": "#1a1714",
+          "note": "black — тёплый near-bg (Cameo ansi black)"
+        },
+        {
+          "index": 1,
+          "role": "terra",
+          "hex": "#d47a59",
+          "note": "red — терракот (Cameo ansi red)"
+        },
+        {
+          "index": 2,
+          "role": "olive",
+          "hex": "#a8b870",
+          "note": "green — жёлто-зелёный оливк (Cameo ansi green)"
+        },
+        {
+          "index": 3,
+          "role": "sand",
+          "hex": "#dba87a",
+          "note": "yellow — песочный (Cameo ansi yellow)"
+        },
+        {
+          "index": 4,
+          "role": "moon",
+          "hex": "#9db3ea",
+          "note": "blue — барвинок (Cameo syntax function.special) — чинит мутный teal"
+        },
+        {
+          "index": 5,
+          "role": "rose",
+          "hex": "#dba9b8",
+          "note": "magenta — роза (Cameo syntax type/keyword) — уводит из семьи yellow"
+        },
+        {
+          "index": 6,
+          "role": "teal",
+          "hex": "#76a696",
+          "note": "cyan — тил (Cameo ansi blue, в своей полосе)"
+        },
+        {
+          "index": 7,
+          "role": "paper",
+          "hex": "#e3dcd2",
+          "note": "white — кремовый (Cameo foreground)"
+        },
+        {
+          "index": 8,
+          "role": "dim",
+          "hex": "#9b8d80",
+          "note": "bright black — читаемый серый"
+        },
+        {
+          "index": 9,
+          "role": "terra_lt",
+          "hex": "#f89470",
+          "note": "bright red"
+        },
+        {
+          "index": 10,
+          "role": "olive_lt",
+          "hex": "#cfdc9a",
+          "note": "bright green"
+        },
+        {
+          "index": 11,
+          "role": "sand_lt",
+          "hex": "#fac99d",
+          "note": "bright yellow"
+        },
+        {
+          "index": 12,
+          "role": "moon_lt",
+          "hex": "#bdcfff",
+          "note": "bright blue — тональный шаг moon (оттенок выровнен: было #a3d6f8, уход 31°)"
+        },
+        {
+          "index": 13,
+          "role": "rose_lt",
+          "hex": "#f7c5d4",
+          "note": "bright magenta — светлая тёплая роза (Cameo syntax param)"
+        },
+        {
+          "index": 14,
+          "role": "teal_lt",
+          "hex": "#99c8b7",
+          "note": "bright cyan — светлый тил"
+        },
+        {
+          "index": 15,
+          "role": "paper_lt",
+          "hex": "#fef7eb",
+          "note": "bright white"
+        }
+      ]
+    }
+  }
+}

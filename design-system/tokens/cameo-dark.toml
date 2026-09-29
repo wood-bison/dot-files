@@ -1,0 +1,655 @@
+# ══════════════════════════════════════════════════
+# 🎭 Cameo Dark — ЕДИНСТВЕННЫЙ источник истины
+# ══════════════════════════════════════════════════
+# Здесь и только здесь живут HEX. Всё остальное
+# (ghostty theme, shell palette, git colors, yazi
+# flavor, GLSL-константы) генерируется командой:
+#
+#   python3 scripts/palette-build.py palettes/cameo-dark.toml --out ~/dotfiles
+#
+# Правило: ни одна секция кроме [roles] не имеет
+# права содержать HEX. Всё ссылается на имя роли.
+
+[meta]
+name        = "cameo-dark"
+label       = "Cameo Dark"
+mode        = "dark"           # dark | light — читает theme-auto
+twin        = "cameo-light"    # день/ночь близнец
+glyph       = "❯"
+bat_theme   = "ansi"
+yazi_flavor = "cameo"
+# Прозрачность: тёмная тема её выдерживает.
+opacity     = 0.95
+
+# Шапка ghostty-темы (проза, не выводится из HEX).
+ghostty_header = """
+Порт «Earth Tones Studio Cameo Dark» из Zed
+(zed-earthtones v3.5.1). Каждый HEX взят из
+самой темы Cameo (terminal.ansi + syntax),
+ANSI пересобран так, чтобы 8 оттенков были
+различимы и читались на #1D1818 (все ≥4.5:1)."""
+
+shell_header = "Cameo Dark — warm palette (Earth Tones · Zed)"
+git_header   = "Cameo Dark — git colors (Earth Tones · Zed)"
+
+
+# ══════════════════════════════════════════════════
+#  ROLES — ЕДИНСТВЕННОЕ МЕСТО С HEX
+# ══════════════════════════════════════════════════
+# sh   — имя переменной в shell/palettes/<name>.sh
+# note — комментарий рядом с переменной в .sh
+# min  — минимальный контраст WCAG против роли `on`
+#        (сборка падает с exit 1, если ниже)
+
+# ─── Поверхности ───
+[roles.bg]
+hex = "#1d1818"
+sh   = "EA_BG"
+note = "terminal.background"
+
+[roles.ink]
+hex  = "#1a1714"
+sh   = "EA_INK"
+note = "ansi black — тёплый near-bg"
+on   = "bg"
+min  = 1.0
+
+[roles.bg_soft]
+hex  = "#231d1d"
+sh   = "EA_BG_SOFT"
+note = "приглушённая подложка (yazi which-mask)"
+on   = "bg"
+min  = 1.0
+
+[roles.bg_elev]
+hex  = "#3a302c"
+sh   = "EA_BG_ELEV"
+note = "приподнятая поверхность (yazi tabs / mode alt)"
+on   = "bg"
+min  = 1.0
+
+[roles.muted]
+hex  = "#8b6665"
+sh   = "EA_MUTED"
+note = "рамки промпта (Cameo border)"
+on   = "bg"
+min  = 1.2
+
+# ─── Текст ───
+[roles.fg]
+hex  = "#f3ede7"
+sh   = "EA_FG"
+note = "foreground — кремовый"
+on   = "bg"
+min  = 4.5
+
+[roles.cream]
+hex  = "#fef7eb"
+sh   = "EA_CREAM"
+note = "bright — совсем светлый"
+on   = "bg"
+min  = 4.5
+
+[roles.subtle]
+hex  = "#b1a1a0"
+sh   = "EA_SUBTLE"
+note = "autosuggest, low-emphasis (Cameo text.muted)"
+on   = "bg"
+min  = 4.5
+
+[roles.dim]
+hex  = "#9b8d80"
+sh   = "EA_DIM"
+note = "комментарии, lock/log (ansi bright black)"
+on   = "bg"
+min  = 2.5
+
+[roles.faint]
+hex  = "#8a7d78"
+sh   = "EA_FAINT"
+note = "symlink target (yazi) — 4.42 намеренно: подъём до 5.90 сближал его с dim (ΔE 6.9 → 4.5)"
+on   = "bg"
+min  = 2.5
+
+# ─── Акценты ───
+[roles.gold]
+hex  = "#c8a24a"  # было #d4b36e — ΔE до sand 0.0376 → 0.0622 — самая тесная пара палитры разведена
+sh   = "EA_GOLD"
+note = "курсор, yazi accent (syntax emphasis)"
+on   = "bg"
+min  = 4.5
+
+[roles.sand]
+hex  = "#dba87a"
+sh   = "EA_SAND"
+note = "prompt ❯, info"
+on   = "bg"
+min  = 4.5
+
+[roles.sand_lt]
+hex  = "#fac99d"
+sh   = "EA_SAND_LT"
+note = "bright yellow"
+on   = "bg"
+min  = 4.5
+
+[roles.terra]
+hex  = "#d47a59"
+sh   = "EA_TERRA"
+note = "error, pointer, executable"
+on   = "bg"
+min  = 4.5
+
+[roles.terra_lt]
+hex  = "#f89470"
+sh   = "EA_TERRA_LT"
+note = "bright red"
+on   = "bg"
+min  = 4.5
+
+[roles.olive]
+hex  = "#a8b870"
+sh   = "EA_OLIVE"
+note = "success, scripts"
+on   = "bg"
+min  = 4.5
+
+[roles.olive_lt]
+hex  = "#cfdc9a"
+sh   = "EA_OLIVE_LT"
+note = "directories"
+on   = "bg"
+min  = 4.5
+
+[roles.rose]
+hex  = "#dba9b8"
+sh   = "EA_ROSE"
+note = "time (Cameo syntax rose)"
+on   = "bg"
+min  = 4.5
+
+[roles.rose_lt]
+hex  = "#f7c5d4"
+sh   = "EA_ROSE_LT"
+note = "bright magenta — светлая тёплая роза"
+on   = "bg"
+min  = 4.5
+
+[roles.moon]
+hex  = "#9db3ea"
+sh   = "EA_MOON"
+note = "git branch (Cameo periwinkle)"
+on   = "bg"
+min  = 4.5
+
+[roles.moon_lt]
+hex  = "#bdcfff"
+sh   = "EA_MOON_LT"
+note = "bright blue"
+on   = "bg"
+min  = 4.5
+
+[roles.teal]
+hex  = "#76a696"
+sh   = "EA_TEAL"
+note = "cyan — тил (Cameo ansi blue)"
+on   = "bg"
+min  = 4.5
+
+[roles.teal_lt]
+hex  = "#99c8b7"
+sh   = "EA_TEAL_LT"
+note = "bright cyan"
+on   = "bg"
+min  = 4.5
+
+# ─── Алиасы (та же краска, другая роль) ───
+[roles.sel]
+hex  = "#503b3a"
+sh   = "EA_SEL"
+note = "selection background"
+
+# ANSI-слоты white/bright-white. В тёмной теме они
+# совпадают с cream, в светлой — расходятся, поэтому
+# роль отдельная (без sh: shell их не использует).
+[roles.paper]
+# v2: ansi7 отведён ВНИЗ от ansi15 — в v1 они были
+# байт-в-байт одним хексом (dE2000 = 0.00), это ломало
+# контракт ANSI-рампы.
+hex  = "#e3dcd2"
+on   = "bg"
+min  = 4.5
+
+[roles.paper_lt]
+same_as = "cream"
+
+
+# ══════════════════════════════════════════════════
+#  Парные проверки контраста (fg-на-bg пары)
+# ══════════════════════════════════════════════════
+# Именно здесь ломаются светлые темы: цвет проходит
+# против фона, но не против собственной подложки.
+[[pairs]]
+fg = "bg"
+bg = "gold"
+min = 4.5
+label = "cursor-text на курсоре"
+
+[[pairs]]
+fg = "fg"
+bg = "sel"
+min = 4.5
+label = "selection-foreground на выделении"
+
+[[pairs]]
+fg = "bg"
+bg = "olive"
+min = 4.5
+label = "yazi count_copied"
+
+[[pairs]]
+fg = "bg"
+bg = "terra"
+min = 4.5
+label = "yazi count_cut / unset_main"
+
+[[pairs]]
+fg = "bg"
+bg = "moon"
+min = 4.5
+label = "yazi mode normal_main"
+
+[[pairs]]
+fg = "sand"
+bg = "bg_elev"
+min = 4.5
+label = "yazi tab inactive"
+
+# Бейджи режима yazi на приподнятой подложке. Это не
+# основной текст, а UI-компонент → планка 3.0 (WCAG 1.4.11),
+# не 4.5. В уже отгруженном тёмном флейворе terra/bg_elev
+# даёт 3.61 — планка 4.5 объявила бы текущую тему сломанной.
+[[pairs]]
+fg = "moon"
+bg = "bg_elev"
+min = 3.0
+label = "yazi mode normal_alt"
+
+[[pairs]]
+fg = "olive"
+bg = "bg_elev"
+min = 3.0
+label = "yazi mode select_alt"
+
+[[pairs]]
+fg = "terra"
+bg = "bg_elev"
+min = 3.0
+label = "yazi unset_alt / progress_error"
+
+
+# ══════════════════════════════════════════════════
+#  SINK: ghostty/themes/<name>
+# ══════════════════════════════════════════════════
+[ghostty]
+surfaces_title  = "── Основа (Cameo surfaces) ──"
+cursor_title    = "── Курсор — тёплое золото (syntax emphasis) ──"
+selection_title = "── Выделение (Cameo element.selected / border) ──"
+normal_title    = "── Обычные цвета (0–7) ──"
+bright_title    = "── Яркие цвета (8–15) ──"
+background           = "bg"
+foreground           = "fg"
+cursor-color         = "gold"
+cursor-text          = "bg"
+selection-background = "sel"
+selection-foreground = "fg"
+# Заливка неактивного сплита и разделитель — тоже цвета темы.
+# В тёмной ink почти чёрный, в светлой это ЧЕРНИЛА на бумаге,
+# поэтому роль одна, а результат разный.
+unfocused-split-fill = "ink"
+split-divider-color  = "muted"
+# Поиск по скроллбэку (cmd+f, Ghostty 1.3.0). Без этих
+# четырёх ключей совпадения красятся стоковым #ffe082.
+search-background          = "sel"
+search-foreground          = "fg"
+search-selected-background = "sand"
+search-selected-foreground = "bg"
+
+# ANSI 0..15 — только ссылки на роли, ни одного HEX.
+ansi = [
+  { i =  0, role = "ink",      note = "black — тёплый near-bg (Cameo ansi black)" },
+  { i =  1, role = "terra",    note = "red — терракот (Cameo ansi red)" },
+  { i =  2, role = "olive",    note = "green — жёлто-зелёный оливк (Cameo ansi green)" },
+  { i =  3, role = "sand",     note = "yellow — песочный (Cameo ansi yellow)" },
+  { i =  4, role = "moon",     note = "blue — барвинок (Cameo syntax function.special) — чинит мутный teal" },
+  { i =  5, role = "rose",     note = "magenta — роза (Cameo syntax type/keyword) — уводит из семьи yellow" },
+  { i =  6, role = "teal",     note = "cyan — тил (Cameo ansi blue, в своей полосе)" },
+  { i =  7, role = "paper",    note = "white — кремовый (Cameo foreground)" },
+  { i =  8, role = "dim",      note = "bright black — читаемый серый" },
+  { i =  9, role = "terra_lt", note = "bright red" },
+  { i = 10, role = "olive_lt", note = "bright green" },
+  { i = 11, role = "sand_lt",  note = "bright yellow" },
+  { i = 12, role = "moon_lt",  note = "bright blue — тональный шаг moon (оттенок выровнен: было #a3d6f8, уход 31°)" },
+  { i = 13, role = "rose_lt",  note = "bright magenta — светлая тёплая роза (Cameo syntax param)" },
+  { i = 14, role = "teal_lt",  note = "bright cyan — светлый тил" },
+  { i = 15, role = "paper_lt", note = "bright white" },
+]
+
+
+# ══════════════════════════════════════════════════
+#  SINK: ghostty/profiles/<name>.conf
+# ══════════════════════════════════════════════════
+# Профиль — единственный слой, где можно переопределить
+# theme и background-opacity: config-file включается
+# ПОСЛЕ основного config и выигрывает (проверено
+# ghostty +show-config).
+[profile]
+header  = "Тема, прозрачность и шейдеры этого профиля.\nПереключается симлинкой profiles/active.conf."
+shaders = [
+  "~/.config/ghostty/shaders/cameo/cursor.glsl",
+  "~/.config/ghostty/shaders/cameo/watercolor.glsl",
+]
+
+
+# ══════════════════════════════════════════════════
+#  SINK: shell/palettes/<name>.sh
+# ══════════════════════════════════════════════════
+# Порядок и заголовки секций — данные, чтобы файл
+# оставался читаемым человеком после генерации.
+[shell]
+sections = [
+  { title = "─── Основа (Cameo surfaces) ───", roles = ["bg", "fg", "cream", "muted", "subtle"] },
+  { title = "─── Акценты (роль → HEX, из палитры Cameo) ───", roles = ["sand", "terra", "olive", "olive_lt", "rose", "moon", "moon_lt", "sel"] },
+  { title = "─── Расширенные роли (раньше были захардкожены в yazi/ghostty) ───", roles = ["gold", "ink", "bg_soft", "bg_elev", "dim", "faint", "terra_lt", "sand_lt", "rose_lt", "teal", "teal_lt"] },
+]
+
+# eza: генератор сам переводит HEX → "38;2;R;G;B".
+[eza]
+# ORDER IS PRECEDENCE: verified on eza 0.23.5 that the LAST matching glob wins.
+# Hard layering above the globs (verified): ex (exec bit) > globs > fi.
+# `di` is global — per-directory colour is impossible on this build.
+# `note` is free (emitter ignores unknown keys); `attr` needs the triple() patch.
+plain = [
+  # ── name colours ──
+  { key = "di", role = "olive_lt", attr = "bold", note = "all dirs; bold separates dir block from file block" },
+  { key = "ln", role = "cream", attr = "italic", note = "symlink: brightest neutral, italic = indirection" },
+  { key = "ex", role = "terra", note = "exec bit — BEATS every glob, so it carries 'this runs'" },
+  { key = "fi", role = "subtle", note = "unmatched RECEDES (was cream/fg = MAX emphasis)" },
+  # ── `ll` metadata columns — currently raw ANSI 31/32/33/34/90 ──
+  { key = "hd", role = "gold", attr = "bold", note = "column headers" },
+  { key = "da", role = "dim", note = "date modified" },
+  { key = "uu", role = "teal", note = "user = you" },
+  { key = "un", role = "dim", note = "user = someone else" },
+  { key = "ur", role = "olive", note = "owner read" },
+  { key = "uw", role = "terra", note = "owner write" },
+  { key = "ux", role = "gold", note = "owner execute" },
+  { key = "gr", role = "dim" }, { key = "gw", role = "dim" }, { key = "gx", role = "dim" },
+  { key = "tr", role = "dim" }, { key = "tw", role = "dim" }, { key = "tx", role = "dim" },
+  { key = "xx", role = "muted", note = "punctuation: the '-' in rw-r--r--" },
+  { key = "xa", role = "dim", note = "extended-attribute '@' marker" },
+  { key = "sn", role = "sand", note = "size number — DEAD while --color-scale=size is on" },
+  { key = "sb", role = "dim", note = "size unit" },
+  { key = "ga", role = "olive", note = "git added" },
+  { key = "gm", role = "sand", note = "git modified" },
+  { key = "gd", role = "terra", note = "git deleted" },
+  { key = "gv", role = "moon", note = "git renamed" },
+  { key = "gt", role = "rose", note = "git type change" },
+  # NOT included: gu / gn (group-owner) — set twice in probes, column never
+  # changed. Unverified on this build, so omitted rather than shipped blind.
+]
+
+globs = [
+  # ── 1. SOURCE — gold = 'syntax emphasis'. Moved OFF olive_lt so
+  #    directories own that colour exclusively. Adds .mjs/.cjs/.mts/.cts.
+ { role = "gold", note = "source code", pats = ["*.ts","*.tsx","*.js","*.jsx","*.mjs","*.cjs","*.mts","*.cts", "*.java","*.kt","*.kts","*.py","*.rs","*.go","*.rb","*.php", "*.swift","*.c","*.h","*.cpp","*.hpp","*.cs"] },
+
+  # ── 2. PRESENTATION — teal was unused in eza; no collision.
+ { role = "teal", note = "styles & markup", pats = ["*.css","*.scss","*.sass","*.less","*.html","*.htm","*.vue","*.svelte","*.astro"] },
+ { role = "teal_lt", note = "media & fonts — off terra, which now means danger only", pats = ["*.png","*.jpg","*.jpeg","*.gif","*.ico","*.svg","*.webp","*.avif", "*.woff","*.woff2","*.ttf","*.otf","*.mp4","*.webm","*.pdf"] },
+
+  # ── 3. DATA — moon = 'data/docs' role; *.sql already lived here.
+ { role = "moon", note = "structured data", pats = ["*.sql","*.csv","*.tsv","*.ndjson","*.parquet","*.proto","*.graphql","*.gql"] },
+
+  # ── 4. CONFIG — sand = 'info'. `*rc` catches .prettierrc/.npmrc/.nvmrc
+  #    in one rule (verified: `*` matches the empty string, so `*.editorconfig`
+  #    matches the leading-dot name too).
+ { role = "sand", note = "config & wiring", pats = ["*.json","*.jsonc","*.yaml","*.yml","*.toml","*.conf","*.cfg","*.ini", "*.properties","*.plist","*rc","*.editorconfig","*.eslintrc", "*.prettierrc","*.babelrc"] },
+
+  # ── 5. SHELL — olive = 'success/scripts'. Only hits NON-exec (sourced)
+  #    files such as the palettes themselves; chmod +x is caught by `ex`.
+ { role = "olive", note = "shell, sourced", pats = ["*.sh","*.zsh","*.bash","*.fish","*.ps1","*.bat","*.cmd"] },
+
+  # ── 6. DOCS body — rose stays the prose family.
+ { role = "rose", note = "prose", pats = ["*.md","*.mdx","*.markdown","*.txt","*.adoc","*.rst","*.org","*.tex"] },
+
+  # ── 7. INFRA / entry points — MUST follow config so docker-compose.yml
+  #    beats *.yml. Globs are CASE-SENSITIVE (verified: `dockerfile` did not
+  #    match `Dockerfile*`), so both cases are listed.
+ { role = "moon_lt", attr = "bold", note = "infra & build entry points", pats = ["Dockerfile","dockerfile","Dockerfile.*","Containerfile", "docker-compose.yml","docker-compose.yaml","compose.yml", "Makefile","makefile","GNUmakefile","Justfile","justfile", "*.tf","*.tfvars","*.nix","Vagrantfile","Procfile"] },
+
+  # ── 8. GIT META — replaces the dangerous `*.git*` catch-all. Hand-authored
+  #    config, not generated noise: 3.76:1 -> 7.33:1 on light.
+ { role = "sand", note = "authored ignore/attribute files", pats = [".gitignore",".gitattributes",".gitmodules",".gitkeep", ".dockerignore",".npmignore",".eslintignore",".prettierignore"] },
+
+  # ── 9. KEYSTONE DOCS — MUST follow *.md. `[A-Z]*.md` is ONE future-proof
+  #    rule covering AGENTS/PRODUCT/DESIGN/README/CHANGELOG and anything
+  #    added later (verified: char classes work, brace expansion does NOT).
+ { role = "rose_lt", attr = "bold", note = "project docs lift out of the .md crowd", pats = ["[A-Z]*.md","[A-Z]*.mdx","LICENSE","LICENSE.*","COPYING", "NOTICE","AUTHORS","CODEOWNERS"] },
+
+  # ── 10. SECRETS — loudest warning. Bold carries the weight because
+  #     terra_lt sits close to terra (dE76 11.0/9.3) BY DESIGN: one danger family.
+ { role = "terra_lt", attr = "bold", note = "real secrets", pats = ["*.env","*.env.*","*.pem","*.key","*.p12","*.pfx","*.keystore", "*.jks","id_rsa","id_ed25519","*.crt","credentials",".netrc",".htpasswd"] },
+
+  # ── 11. GENERATED & IGNORED — the single biggest readability win.
+  #     Placed AFTER source/config so *.d.ts, *.min.js, *.min.css and
+  #     *-lock.* override their broad parents.
+  #     Deliberately NO SGR-2: terminals render faint by blending toward the
+  #     background, which would push the measured 3.76:1 on light below the
+  #     3:1 floor and make the contrast table stop describing the screen.
+ { role = "dim", note = "generated, locked, archived, junk", pats = ["*.lock","*-lock.json","*-lock.yaml","*.log","*.map","*.min.js", "*.min.css","*.d.ts","*.tsbuildinfo","*.zip","*.tar","*.gz","*.tgz", "*.xz","*.7z","*.jar","*.whl","*.bak",".DS_Store","Thumbs.db", "*.pyc","*.class","*.orig"] },
+
+  # ── 12. TEMPLATES — LAST so .env.example demotes from secret to config.
+ { role = "sand", note = "templates are not secrets", pats = ["*.example","*.sample","*.template","*.dist"] },
+]
+[git]
+status = [
+  { key = "added",     role = "olive" },
+  { key = "changed",   role = "sand" },
+  { key = "untracked", role = "terra" },
+]
+branch = [
+  { key = "current", role = "moon_lt", attr = "bold" },
+  { key = "local",   role = "olive_lt" },
+  { key = "remote",  role = "sand" },
+]
+diff = [
+  { key = "meta", role = "sand", attr = "bold" },
+  { key = "frag", role = "moon" },
+  { key = "old",  role = "terra" },
+  { key = "new",  role = "olive" },
+]
+# {role} подставляется генератором.
+
+# delta — постраничник диффов. syntax = подсветка кода поверх фона.
+delta = [
+  { key = "plus-style",            role = "bg_soft",  prefix = "syntax" },
+  { key = "minus-style",           role = "sel",      prefix = "syntax" },
+  { key = "plus-emph-style",       role = "olive",    prefix = "syntax" },
+  { key = "minus-emph-style",      role = "terra",    prefix = "syntax" },
+  { key = "file-decoration-style", role = "gold",     attr = "overline" },
+  { key = "hunk-header-style",     role = "dim" },
+  { key = "line-numbers-left-style",  role = "muted" },
+  { key = "line-numbers-right-style", role = "muted" },
+  { key = "line-numbers-minus-style", role = "terra" },
+  { key = "line-numbers-plus-style",  role = "olive" },
+  # zero — контекстные строки; без него delta ставит холодный #444444
+  { key = "line-numbers-zero-style",  role = "dim" },
+]
+
+lg = "log --graph --pretty=format:'%C({sand})%h%C(reset) %C({olive_lt})%s%C(reset) %C({dim})— %an, %ar%C(reset)%C({terra})%d%C(reset)' --abbrev-commit"
+
+
+# ══════════════════════════════════════════════════
+#  SINK: ~/.config/yazi/flavors/<flavor>.yazi/flavor.toml
+# ══════════════════════════════════════════════════
+# Шаблон один на все палитры (scripts/templates/),
+# чтобы светлый близнец не копировал 90 строк.
+[yazi]
+template = "yazi-flavor.toml.tmpl"
+
+
+# ══════════════════════════════════════════════════
+#  SINK: GLSL-константы (правка на месте, по имени)
+# ══════════════════════════════════════════════════
+# Генератор находит `const vec4 <ИМЯ> = vec4(...)`
+# и переписывает только числа + хвостовой комментарий.
+# Остальной шейдер не трогается.
+[[shader]]
+# v2-шейдеры берут цвет из iCursorColor / iBackgroundColor.
+# Синхронизируем только страховку на случай, если тема
+# не задала cursor-color.
+path = "ghostty/shaders/cameo/cursor.glsl"
+[shader.consts]
+FALLBACK_GOLD = { role = "gold", label = "золото темы (страховка)" }
+
+# watercolor.glsl больше не темплейтится: AUTO_POLARITY
+# определяет бумагу по iBackgroundColor и сам переключает
+# зерно и тинт. Один файл на обе темы.
+
+# ══════════════════════════════════════════════════
+#  SINK: eza theme.yml — цвет И глиф каждой папке
+# ══════════════════════════════════════════════════
+# EZA_COLORS даёт директориям РОВНО один цвет (di=): правила по
+# именам и глобам читает только colour_file(), а ветка
+# is_directory() в FileName::style() коротит до него. theme.yml
+# это обходит — Theme::style_override() матчит по имени без
+# проверки вида файла и вызывается из paint() ДО kind-based style().
+#
+# ⚠️  eza МОЛЧА выбрасывает весь файл при ошибке разбора:
+# ThemeConfig::to_theme() заканчивается на from_reader(...).ok()
+# Ни stderr, ни ненулевого кода возврата. Поэтому после сборки
+# ОБЯЗАТЕЛЬНО гонять scripts/eza-theme-check.sh.
+#
+# glyph обязан быть РОВНО одним символом: пустая строка или два
+# символа роняют ВЕСЬ файл (char не десериализуется из них).
+# icon и filename красятся вместе — иначе иконка останется на
+# старом цвете из EZA_COLORS и запись выйдет двухцветной.
+
+[[eza_theme]]
+name  = "apps"
+glyph = "󰉋"
+role  = "gold"
+bold = true
+
+[[eza_theme]]
+name  = "libs"
+glyph = ""
+role  = "gold"
+bold = true
+
+[[eza_theme]]
+name  = "internals"
+glyph = ""
+role  = "sand"
+
+[[eza_theme]]
+name  = "scripts"
+glyph = ""
+role  = "olive"
+
+[[eza_theme]]
+name  = "docs"
+glyph = ""
+role  = "moon"
+
+[[eza_theme]]
+name  = "curriculum"
+glyph = ""
+role  = "moon_lt"
+
+[[eza_theme]]
+name  = "reports"
+glyph = "󰺱"
+role  = "moon"
+
+[[eza_theme]]
+name  = "dist"
+glyph = "󰏕"
+role  = "terra"
+
+[[eza_theme]]
+name  = "tmp"
+glyph = ""
+role  = "muted"
+italic = true
+
+[[eza_theme]]
+name  = "logs"
+glyph = "󰑐"
+role  = "dim"
+
+[[eza_theme]]
+name  = "node_modules"
+glyph = ""
+role  = "muted"
+italic = true
+
+[[eza_theme]]
+name  = ".git"
+glyph = ""
+role  = "subtle"
+
+[[eza_theme]]
+name  = ".github"
+glyph = ""
+role  = "subtle"
+
+[[eza_theme]]
+name  = ".vscode"
+glyph = ""
+role  = "dim"
+
+[[eza_theme]]
+name  = ".idea"
+glyph = ""
+role  = "dim"
+
+[[eza_theme]]
+name  = ".nx"
+glyph = ""
+role  = "dim"
+
+[[eza_theme]]
+name  = ".angular"
+glyph = ""
+role  = "dim"
+
+[[eza_theme]]
+name  = ".agents"
+glyph = "󰚩"
+role  = "teal"
+
+[[eza_theme]]
+name  = ".codex"
+glyph = "󰝰"
+role  = "teal"
+
+[[eza_theme]]
+name  = ".opencode"
+glyph = "󰅩"
+role  = "teal"
+
+[[eza_theme]]
+name  = ".pi"
+glyph = "󰏎"
+role  = "teal"
+
+[[eza_theme]]
+name  = ".superpowers"
+glyph = "󰉁"
+role  = "teal"
+
+[[eza_theme]]
+name  = ".impeccable"
+glyph = "󰴍"
+role  = "teal"

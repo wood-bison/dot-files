@@ -1,0 +1,4 @@
+# Smart case: uppercase in the query enables case-sensitive matching.
+# Use rg --no-config to bypass these preferences.
+--smart-case
+--hyperlink-format=default

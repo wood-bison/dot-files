@@ -1,0 +1,671 @@
+# ════════════════════════════════════════════════
+# 🎨 Zed sink — карта роль → ключ темы
+# ════════════════════════════════════════════════
+# ЭТО ДАННЫЕ, НЕ КОД. Новый ключ Zed = строка здесь,
+# правка build.py не нужна.
+#
+# Формы значения (ровно три):
+#   "gold"              — роль как есть → #rrggbb
+#   "alpha:gold:0.30"   — роль + альфа  → #rrggbbaa (Zed смешивает сам,
+#                         поэтому одна альфа верна и над редактором,
+#                         и над гаттером, и над поповером)
+#   "literal:opaque"    — литерал мимо палитры (единственный не-цвет:
+#                         background.appearance = opaque|transparent|blurred)
+#
+# Ни одного HEX здесь быть не должно — только имена ролей.
+# Обе темы используют ОДНУ карту: имена ролей совпадают,
+# различаются только hex в cameo-dark.toml / cameo-light.toml.
+#
+# Собрать:  python3 build.py --zed --out ~/dotfiles
+
+# ── accents ───────────────────────────────────────────────
+# Top-level массив темы, ДО первой таблицы: внутри [style] он стал
+# бы style.accents и сборка бы упала.
+#
+# Питает colorize_brackets (радужные скобки) и
+# indent_guides.background_coloring = "indent_aware". Без него Zed
+# берёт СВОЮ радугу Radix из 13 цветов и красит ею warm-тему —
+# crates/theme/src/styles/accents.rs.
+#
+# Порядок НЕ радужный, а террасирующий: тёплый и холодный
+# чередуются, поэтому соседние уровни вложенности всегда различимы,
+# а страница остаётся двухцветной. Роли существующие, новых хексов
+# не появляется.
+#
+# ⚠️  Обе настройки, которые это питают, оставлены ВЫКЛЮЧЕННЫМИ.
+# Массив нужен, чтобы при их включении цвета были наши, а не Radix.
+accents = ["moon", "sand", "teal", "terra", "moon_lt", "olive"]
+
+[meta]
+schema = "https://zed.dev/schema/themes/v0.2.0.json"
+family = "Cameo"                                  # ThemeFamily.name
+author = "Sergey Zhechko"
+file   = "cameo.json"                             # <out>/design-system/targets/zed/<file>
+
+# Порядок тем в JSON: сначала light, потом dark (как в исходной
+# теме пользователя). Имена берутся из meta.label палитры —
+# «Cameo Light» / «Cameo Dark». ЭТО КОНТРАКТ С settings.json:
+# переименуешь — Zed молча свалится на дефолтную тему.
+order = ["light", "dark"]
+
+# ── Гейт: слоты ANSI против [ghostty].ansi той же палитры ──
+# Индекс в списке = номер слота ANSI. Сборка падает, если
+# terminal.ansi.<slot> в [style] разъехался с ghostty.
+[ansi]
+slots = [
+  "black", "red", "green", "yellow",
+  "blue", "magenta", "cyan", "white",
+  "bright_black", "bright_red", "bright_green", "bright_yellow",
+  "bright_blue", "bright_magenta", "bright_cyan", "bright_white",
+]
+
+
+# ════════════════════════════════════════════════
+#  STYLE — 134 скалярных ключа
+# ════════════════════════════════════════════════
+[style]
+
+# ─── Поверхности — лестница из трёх ступеней ───
+# content = bg (редактор, гаттер, активная вкладка, терминал),
+# pane chrome = bg_soft (панели, tab bar, тулбар, элементы),
+# window frame + floating = bg_elev (титул, статус, поповеры).
+# bg_soft/bg даёт всего 1.06 (тёмная) и 1.07 (светлая) — поповер
+# на bg_soft не читался бы как всплывающий, поэтому он на bg_elev.
+"background.appearance"                        = "literal:opaque"
+"background"                                   = "bg"
+"elevated_surface.background"                  = "bg_elev"    # поповеры/модалки — только bg_elev, иначе не видно
+"surface.background"                           = "bg_elev"
+"panel.background"                             = "bg_soft"    # сайдбары — chrome, не контент (как в оригинале)
+"title_bar.background"                         = "bg_elev"
+"title_bar.inactive_background"                = "bg_elev"
+"status_bar.background"                        = "bg_elev"
+"toolbar.background"                           = "bg_soft"    # хлебные крошки: на bg_elev дали бы полосатость
+"tab_bar.background"                           = "bg_soft"
+"tab.active_background"                        = "bg"
+"tab.inactive_background"                      = "bg_soft"
+"editor.background"                            = "bg"
+"editor.gutter.background"                     = "bg"
+"editor.subheader.background"                  = "bg_soft"
+"terminal.background"                          = "bg"
+
+# ─── Рамки, направляющие, невидимые символы ───
+# border/pane_group.border декоративны (в светлой теме 2.05 —
+# разделитель не обязан проходить 1.4.11). А вот *focused/*selected
+# — это состояние: moon 8.42/6.71 и gold 8.76/4.65, обе ≥3:1.
+# alpha 0.65 у border.variant восстановлен из оригинала (0.68×).
+"border"                                       = "muted"
+"border.variant"                               = "alpha:muted:0.65"
+"border.focused"                               = "moon"
+"border.selected"                              = "gold"
+"border.transparent"                           = "alpha:bg:0.0" # 0.0 от любой роли == #00000000, но hex не убегает из TOML
+"border.disabled"                              = "alpha:muted:0.65"
+"pane_group.border"                            = "muted"
+"panel.focused_border"                         = "moon"
+"pane.focused_border"                          = "moon"
+"panel.indent_guide"                           = "alpha:muted:0.65"
+"panel.indent_guide_hover"                     = "faint"
+"panel.indent_guide_active"                    = "faint"
+"editor.indent_guide"                          = "alpha:muted:0.65"
+"editor.indent_guide_active"                   = "faint"
+"editor.wrap_guide"                            = "alpha:muted:0.65"
+"editor.active_wrap_guide"                     = "faint"
+"editor.invisible"                             = "faint"
+
+# ─── Скроллбар ───
+# Лестница ползунка muted → faint → dim монотонна в обеих темах
+# (3.50→4.42→5.45 тёмная, 2.05→3.00→3.76 светлая).
+"scrollbar.track.background"                   = "bg"
+"scrollbar.track.border"                       = "alpha:muted:0.65"
+"scrollbar.thumb.background"                   = "muted"      # muted = 2.05 в светлой: известный разрыв 1.4.11, чинится роль, не ключ
+"scrollbar.thumb.hover_background"             = "faint"
+"scrollbar.thumb.active_background"            = "dim"
+"scrollbar.thumb.border"                       = "alpha:muted:0.65"
+
+# ─── minimap ───
+# Zed 1.15 объявляет эти ключи, у Cameo их не было — значит миникарта
+# рисовалась не нашим. Зеркалим лестницу скроллбара: она про то же.
+"minimap.thumb.background"                     = "alpha:muted:0.55"
+"minimap.thumb.hover_background"               = "alpha:faint:0.70"
+"minimap.thumb.active_background"              = "alpha:dim:0.80"
+"minimap.thumb.border"                         = "alpha:muted:0.45"
+
+# ─── version_control ───
+# Отдельная от created/deleted/modified группа: те красят строки
+# в списках и панелях, эти — гит-разметку в редакторе и diff-виде.
+# Роли те же, чтобы «добавлено» везде значило одно и то же.
+"version_control.added"                        = "olive"
+"version_control.deleted"                      = "terra"
+"version_control.modified"                     = "sand"
+"version_control.renamed"                      = "moon"
+"version_control.conflict"                     = "rose"
+"version_control.ignored"                      = "faint"
+# Пословный diff внутри строки — светлые варианты тех же ролей,
+# чтобы точечная правка читалась поверх подсветки всей строки.
+"version_control.word_added"                   = "olive_lt"
+"version_control.word_deleted"                 = "terra_lt"
+# Маркеры конфликта: полупрозрачные подложки, текст поверх остаётся
+# читаемым — поэтому alpha, а не сплошной цвет.
+"version_control.conflict_marker.ours"         = "alpha:olive:0.18"
+"version_control.conflict_marker.theirs"       = "alpha:moon:0.18"
+
+# ─── Текст редактора и заливки ───
+# Лестница заливок против bg (тёмная/светлая): active_line 1.24/1.14
+# < highlighted 1.34/1.20 < doc.read 1.29/1.21 < doc.write 1.48/1.31
+# < sel 1.70/1.36 — монотонна. Подсветки одного символа держим
+# нейтральными (на fg), чтобы их не путали с выделением.
+# search.*: olive, а не gold — gold на светлой попадает в sel.
+"editor.foreground"                            = "fg"
+"editor.line_number"                           = "dim"
+"editor.active_line_number"                    = "gold"
+"editor.active_line.background"                = "alpha:sel:0.45" # слабее настоящего выделения (1.24/1.14 против 1.70/1.36)
+"editor.highlighted_line.background"           = "alpha:sel:0.60"
+"editor.document_highlight.read_background"    = "alpha:fg:0.10"
+"editor.document_highlight.write_background"   = "alpha:fg:0.14"
+"editor.document_highlight.bracket_background" = "alpha:fg:0.14"
+"search.match_background"                      = "alpha:olive:0.22"
+"search.active_match_background"               = "alpha:olive:0.40" # активное совпадение всегда под выделением → обязано перебить sel
+
+# ─── Текст и иконки UI ───
+"text"                                         = "fg"
+"text.muted"                                   = "subtle"
+"text.placeholder"                             = "dim"
+"text.disabled"                                = "dim"
+"text.accent"                                  = "moon"
+"icon"                                         = "subtle"
+"icon.muted"                                   = "dim"
+"icon.disabled"                                = "dim"
+"icon.accent"                                  = "gold"
+"icon.placeholder"                             = "dim"
+
+# ─── Элементы (строки списков, кнопки, ghost) ───
+# hover/active — нейтральный подъём на fg (0.06/0.10 из оригинала),
+# поэтому одинаково работает поверх любой поверхности.
+"element.background"                           = "bg_soft"
+"element.hover"                                = "alpha:fg:0.06"
+"element.active"                               = "alpha:fg:0.10"
+"element.selected"                             = "sel"
+"element.disabled"                             = "bg_soft"
+"drop_target.background"                       = "alpha:moon:0.20"
+"ghost_element.background"                     = "alpha:bg:0.0"
+"ghost_element.hover"                          = "alpha:fg:0.06"
+"ghost_element.active"                         = "alpha:fg:0.10"
+"ghost_element.selected"                       = "sel"
+"ghost_element.disabled"                       = "bg_soft"
+"link_text.hover"                              = "moon"
+
+# ─── Встроенный терминал ───
+# terminal.ansi.* обязаны совпадать с [ghostty].ansi байт-в-байт,
+# иначе один и тот же shell выглядит двумя разными темами.
+# Совпадение проверяется гейтом (см. [ansi] ниже).
+# dim_* — слоты, которых у ghostty нет: 0.59 восстановлено из
+# оригинальной темы (там измерено 0.566–0.688).
+"terminal.foreground"                          = "fg"
+"terminal.bright_foreground"                   = "cream"      # в светлой теме cream ТЕМНЕЕ fg — так и надо
+"terminal.dim_foreground"                      = "alpha:fg:0.59"
+# Фон ANSI-области; без него Zed подставляет свой, мимо палитры.
+"terminal.ansi.background"                     = "bg"
+"terminal.ansi.black"                          = "ink"
+"terminal.ansi.red"                            = "terra"
+"terminal.ansi.green"                          = "olive"
+"terminal.ansi.yellow"                         = "sand"
+"terminal.ansi.blue"                           = "moon"
+"terminal.ansi.magenta"                        = "rose"
+"terminal.ansi.cyan"                           = "teal"
+"terminal.ansi.white"                          = "paper"
+"terminal.ansi.bright_black"                   = "dim"
+"terminal.ansi.bright_red"                     = "terra_lt"
+"terminal.ansi.bright_green"                   = "olive_lt"
+"terminal.ansi.bright_yellow"                  = "sand_lt"
+"terminal.ansi.bright_blue"                    = "moon_lt"
+"terminal.ansi.bright_magenta"                 = "rose_lt"
+"terminal.ansi.bright_cyan"                    = "teal_lt"
+"terminal.ansi.bright_white"                   = "paper_lt"   # paper_lt = cream: в светлой теме это чернила, не бумага
+"terminal.ansi.dim_black"                      = "alpha:ink:0.59"
+"terminal.ansi.dim_red"                        = "alpha:terra:0.59"
+"terminal.ansi.dim_green"                      = "alpha:olive:0.59"
+"terminal.ansi.dim_yellow"                     = "alpha:sand:0.59"
+"terminal.ansi.dim_blue"                       = "alpha:moon:0.59"
+"terminal.ansi.dim_magenta"                    = "alpha:rose:0.59"
+"terminal.ansi.dim_cyan"                       = "alpha:teal:0.59"
+"terminal.ansi.dim_white"                      = "alpha:paper:0.59"
+
+# ─── Диагностика и VCS ───
+# Заливка = 0.12 акцента, обводка = 0.30 — это не вкус, а
+# восстановленные константы оригинала (0.117–0.123 / 0.297–0.302).
+"error"                                        = "terra"
+"error.background"                             = "alpha:terra:0.12"
+"error.border"                                 = "alpha:terra:0.30"
+"warning"                                      = "sand"
+"warning.background"                           = "alpha:sand:0.12"
+"warning.border"                               = "alpha:sand:0.30"
+"info"                                         = "moon"
+"info.background"                              = "alpha:moon:0.12"
+"info.border"                                  = "alpha:moon:0.30"
+"success"                                      = "olive"
+"success.background"                           = "alpha:olive:0.12"
+"success.border"                               = "alpha:olive:0.30"
+"hint"                                         = "subtle"     # НЕ moon: info уже moon, а они соседи в панели диагностик
+"hint.background"                              = "alpha:subtle:0.12"
+"hint.border"                                  = "alpha:subtle:0.30"
+"ignored"                                      = "dim"
+"ignored.background"                           = "alpha:dim:0.12"
+"ignored.border"                               = "alpha:dim:0.30"
+# Волна VI: тройки, которых в карте не было вообще. Незаданный ключ —
+# это не «прозрачно», а дефолт Zed, то есть цвет ВНЕ палитры Cameo.
+# predictive — призрачный текст предсказания. Роль та же, что у скоупа
+# подсветки [[syntax]] scope = "predictive" ниже, иначе один и тот же
+# текст красился бы двумя разными способами.
+"predictive"                                   = "muted"
+"predictive.background"                        = "alpha:muted:0.12"
+"predictive.border"                            = "alpha:muted:0.30"
+# unreachable — недостижимый код. jdtls на Java выдаёт это регулярно,
+# поэтому ключ реально виден в работе, а не теоретический.
+"unreachable"                                  = "faint"
+"unreachable.background"                       = "alpha:faint:0.12"
+"unreachable.border"                           = "alpha:faint:0.30"
+"hidden"                                       = "dim"
+"hidden.background"                            = "alpha:dim:0.12"
+"hidden.border"                                = "alpha:dim:0.30"
+"created"                                      = "olive"
+"created.background"                           = "alpha:olive:0.12"
+"created.border"                               = "alpha:olive:0.30"
+"modified"                                     = "sand"
+"modified.background"                          = "alpha:sand:0.12"
+"modified.border"                              = "alpha:sand:0.30"
+"deleted"                                      = "terra"
+"deleted.background"                           = "alpha:terra:0.12"
+"deleted.border"                               = "alpha:terra:0.30"
+"conflict"                                     = "rose"       # rose, а не второй terra — конфликт и удаление живут в одном гаттере
+"conflict.background"                          = "alpha:rose:0.12"
+"conflict.border"                              = "alpha:rose:0.30"
+"renamed"                                      = "moon"
+"renamed.background"                           = "alpha:moon:0.12"
+"renamed.border"                               = "alpha:moon:0.30"
+
+
+# ════════════════════════════════════════════════
+#  PLAYERS — курсоры совместного редактирования
+# ════════════════════════════════════════════════
+# Порядок значим: индекс 0 — сам пользователь. Выделения
+# коллег — единые 20% их цвета (константа из оригинала);
+# у слота 0 это настоящая роль sel, чтобы выделение в Zed
+# совпало с selection-background в ghostty.
+
+[[players]]
+cursor     = "gold"
+background = "gold"
+selection  = "sel"
+
+[[players]]
+cursor     = "moon"
+background = "moon"
+selection  = "alpha:moon:0.20"
+
+[[players]]
+cursor     = "olive"
+background = "olive"
+selection  = "alpha:olive:0.20"
+
+[[players]]
+cursor     = "rose"
+background = "rose"
+selection  = "alpha:rose:0.20"
+
+[[players]]
+cursor     = "terra"
+background = "terra"
+selection  = "alpha:terra:0.20"
+
+[[players]]
+cursor     = "teal"
+background = "teal"
+selection  = "alpha:teal:0.20"
+
+[[players]]
+cursor     = "sand"
+background = "sand"
+selection  = "alpha:sand:0.20"
+
+[[players]]
+cursor     = "moon_lt"
+background = "moon_lt"
+selection  = "alpha:moon_lt:0.20"
+
+
+# ════════════════════════════════════════════════
+#  SYNTAX — 47 скоупов
+# ════════════════════════════════════════════════
+# font_style / font_weight пишем ТОЛЬКО там, где они есть:
+# пустая строка не входит в enum ("normal|italic|oblique"),
+# а Zed на битой теме падает МОЛЧА — просто оставляет старую.
+# Курсивов ровно 6, весов ровно 2 — как в исходной теме.
+
+[[syntax]]
+scope = "keyword"
+color = "gold"
+font_weight = 600
+
+[[syntax]]
+scope = "keyword.control"
+color = "gold"
+font_weight = 600
+
+[[syntax]]
+scope = "operator"
+color = "subtle"
+
+[[syntax]]
+scope = "function"
+color = "moon_lt"
+font_weight = 500
+
+[[syntax]]
+scope = "function.method"
+color = "moon_lt"
+font_weight = 500
+
+[[syntax]]
+scope = "function.builtin"
+color = "moon_lt"
+font_weight = 500
+font_style = "italic"
+
+[[syntax]]
+scope = "type"
+color = "teal_lt"
+
+[[syntax]]
+scope = "type.builtin"
+color = "teal_lt"
+font_style = "italic"
+
+[[syntax]]
+scope = "enum"
+color = "teal_lt"
+
+[[syntax]]
+scope = "constructor"
+color = "teal_lt"
+
+[[syntax]]
+scope = "variant"
+color = "teal_lt"
+
+[[syntax]]
+scope = "string"
+color = "olive"
+
+[[syntax]]
+scope = "string.escape"
+color = "olive_lt"
+font_weight = 600
+
+[[syntax]]
+scope = "string.regex"
+color = "olive_lt"
+
+[[syntax]]
+scope = "string.special"
+color = "olive_lt"
+
+[[syntax]]
+scope = "string.special.symbol"
+color = "olive_lt"
+
+[[syntax]]
+scope = "text.literal"
+color = "olive"
+
+[[syntax]]
+scope = "number"
+color = "sand_lt"
+
+[[syntax]]
+scope = "boolean"
+color = "rose"
+font_weight = 500
+
+[[syntax]]
+scope = "constant"
+color = "rose"
+font_weight = 500
+
+[[syntax]]
+scope = "constant.builtin"
+color = "rose"
+font_weight = 500
+
+[[syntax]]
+scope = "comment"
+color = "dim"
+font_style = "italic"
+font_weight = 300
+
+[[syntax]]
+scope = "comment.doc"
+color = "dim"
+font_style = "italic"
+font_weight = 300
+
+[[syntax]]
+scope = "property"
+color = "moon"
+
+[[syntax]]
+scope = "variable.parameter"
+color = "rose_lt"
+font_style = "italic"
+
+[[syntax]]
+scope = "variable.special"
+color = "moon"
+font_weight = 600
+font_style = "italic"
+
+[[syntax]]
+scope = "variable.member"
+color = "moon"
+
+[[syntax]]
+scope = "attribute"
+color = "moon_lt"
+
+[[syntax]]
+scope = "namespace"
+color = "subtle"
+
+[[syntax]]
+scope = "module"
+color = "subtle"
+
+[[syntax]]
+scope = "label"
+color = "gold"
+font_weight = 600
+
+[[syntax]]
+scope = "tag"
+# terra ОСВОБОЖДЁН под тревогу. Раньше tag был его единственным
+# потребителем в синтаксисе, из-за чего ошибка и JSX-тег красились
+# одним цветом — ΔE ровно 0, то есть неотличимы. terra при этом
+# уже означает опасность во всей системе: исполняемый файл в eza,
+# untracked в git, вырезанное в yazi. Так что тег был здесь лишним.
+#
+# teal выбран не случайно: в JSX тег — это ссылка на компонент,
+# то есть на ТИП, а тип уже сидит на teal_lt. Оттенок-сосед делает
+# это родство видимым. ΔE до типа 10.1 (светлая) — различимо;
+# ΔE до ошибки 65.7 — ни при каком взгляде не спутать.
+# Контраст даже вырос: 6.21 → 6.37 (светлая), 5.62 → 6.41 (тёмная).
+color = "teal"
+font_weight = 500
+
+[[syntax]]
+scope = "punctuation"
+color = "dim"
+
+[[syntax]]
+scope = "punctuation.bracket"
+color = "dim"
+
+[[syntax]]
+scope = "punctuation.delimiter"
+color = "faint"
+font_weight = 300
+
+[[syntax]]
+scope = "punctuation.special"
+color = "olive_lt"
+
+[[syntax]]
+scope = "punctuation.list_marker"
+color = "gold"
+font_weight = 600
+
+[[syntax]]
+scope = "preproc"
+color = "gold"
+font_weight = 600
+
+[[syntax]]
+scope = "embedded"
+color = "fg"
+
+[[syntax]]
+scope = "primary"
+color = "fg"
+
+[[syntax]]
+scope = "predictive"
+color = "muted"
+font_style = "italic"
+font_weight = 300
+
+[[syntax]]
+scope = "hint"
+color = "subtle"
+font_style = "italic"
+font_weight = 300
+
+[[syntax]]
+scope = "link_text"
+color = "moon_lt"
+
+[[syntax]]
+scope = "link_uri"
+color = "moon_lt"
+font_style = "italic"
+
+[[syntax]]
+scope = "title"
+color = "sand"
+font_weight = 600
+
+[[syntax]]
+scope = "emphasis"
+color = "gold"
+font_style = "italic"
+
+[[syntax]]
+scope = "emphasis.strong"
+color = "gold"
+font_weight = 700
+
+# ── v3: скоупы, которые грамматики Zed отдают, а тема не ловила ──
+#
+# Zed подбирает цвет по имени захвата так (crates/syntax_theme/src/
+# syntax_theme.rs::highlight_id): берёт самый длинный ключ темы,
+# который является ТОЧЕЧНЫМ префиксом захвата. Разрешение идёт только
+# ВНИЗ — родитель никогда не наследует у потомка.
+#
+# Отсюда и дыра, ради которой всё это: в теме были variable.member,
+# variable.parameter и variable.special, но не было `variable`. А
+# `(identifier) @variable` — вторая строка typescript.scm, ловушка на
+# все имена сразу. "variable".strip_prefix("variable.member") даёт
+# None, поэтому обычные идентификаторы падали в editor.foreground:
+# this и параметры покрашены, а `const account = …` — нет. Туда же
+# уходил голый декоратор без скобок (@Entity, @AutoMap).
+#
+# Все шестнадцать используют УЖЕ СУЩЕСТВУЮЩИЕ роли. Новых HEX нет,
+# поэтому WCAG-гейт от них упасть не может.
+#
+# Проверено на Zed 1.15.1, грамматики из crates/grammars/*/highlights.scm.
+
+# ── пусто было по-настоящему: цвета не давал никто ──
+
+[[syntax]]
+scope = "variable"
+color = "fg"
+
+[[syntax]]
+scope = "variable.jsdoc"
+color = "rose_lt"
+font_style = "italic"
+
+# diff.* — встроенный diff-просмотр Zed и буфер сообщения коммита.
+# Роли те же, что у гаттера (created/modified/deleted), чтобы diff и
+# полоска у номера строки говорили об изменениях одним языком.
+
+[[syntax]]
+scope = "diff.plus"
+color = "olive"
+
+[[syntax]]
+scope = "diff.minus"
+color = "terra"
+
+[[syntax]]
+scope = "diff.delta"
+color = "sand"
+
+[[syntax]]
+scope = "diff.delta.moved"
+color = "moon"
+
+[[syntax]]
+scope = "markup.heading"
+color = "sand"
+font_weight = 600
+
+[[syntax]]
+scope = "markup.link.url"
+color = "moon"
+font_style = "italic"
+
+[[syntax]]
+scope = "variable.other.member"
+color = "subtle"
+
+[[syntax]]
+scope = "strikethrough.markup"
+color = "muted"
+
+# ── различимость: цвет наследовался от родителя, даём свой вес ──
+
+[[syntax]]
+scope = "keyword.declaration"
+color = "gold"
+font_weight = 700
+
+[[syntax]]
+scope = "keyword.import"
+color = "sand"
+font_weight = 500
+
+[[syntax]]
+scope = "type.class"
+color = "teal_lt"
+font_weight = 600
+
+[[syntax]]
+scope = "property.json_key"
+color = "moon_lt"
+
+[[syntax]]
+scope = "keyword.jsdoc"
+color = "gold"
+font_style = "italic"
+
+[[syntax]]
+scope = "type.jsdoc"
+color = "teal_lt"
+font_style = "italic"

@@ -1,0 +1,16 @@
+# Runtime dependencies for this desktop configuration.
+brew "git-delta"
+brew "python"
+brew "eza"
+brew "bat"
+brew "fd"
+brew "ripgrep"
+brew "fzf"
+brew "fzf-tab"
+brew "zoxide"
+brew "zsh-autosuggestions"
+brew "zsh-fast-syntax-highlighting"
+
+cask "ghostty"
+cask "zed"
+cask "font-maple-mono-nf"

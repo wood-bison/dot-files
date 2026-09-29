@@ -1,0 +1,14 @@
+[
+  {
+    "bindings": {
+      "cmd-b": "workspace::ToggleLeftDock",
+      "cmd-p": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "f12": "editor::GoToDefinition"
+    }
+  }
+]

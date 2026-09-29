@@ -1,0 +1,15 @@
+# ── Claude Code: личное, но НЕ общее ─────────────────────
+# В командном репо .claude/{agents,rules,skills,agent-memory}
+# ОТСЛЕЖИВАЮТСЯ и являются общими — блокировать весь .claude/
+# нельзя, иначе новый общий скилл не получится закоммитить.
+# Поэтому перечисляем только то, что личное по своей природе.
+**/.claude/settings.local.json
+**/.claude/plans/
+**/.claude/worktrees/
+**/.claude/todos/
+**/.claude/shell-snapshots/
+**/.claude/statsig/
+**/.claude/.credentials.json
+**/.claude/history.jsonl
+dependency-reduced-pom.xml
+.task/

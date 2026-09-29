@@ -1,0 +1,18 @@
+# Presentation only: identity, credentials and pull policy stay machine-owned.
+[init]
+    defaultBranch = main
+[color]
+    ui = auto
+[core]
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true
+    line-numbers = true
+    hyperlinks = true
+    syntax-theme = ansi
+    minus-style = red
+    plus-style = green
+    minus-emph-style = red bold
+    plus-emph-style = green bold

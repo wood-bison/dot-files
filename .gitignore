@@ -1,0 +1,14 @@
+.DS_Store
+*.backup
+*.backup.*
+.secrets
+.gitconfig.local
+.zcompdump*
+*.zwc
+node_modules/
+__pycache__/
+*.pyc
+.claude/settings.local.json
+# Generated locally from licensed source glyphs.
+design-system/themes/fluent-glass/generated/fluent-glass-icons/
+# Machine preferences, installer state and backups live outside this checkout.

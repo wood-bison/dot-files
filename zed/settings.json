@@ -1,0 +1,133 @@
+{
+  "mouse_wheel_zoom": true,
+  "terminal": {
+    "font_size": 17.0
+  },
+  "disable_ai": true,
+  "cli_default_open_behavior": "existing_window",
+  "project_panel": {
+    "dock": "left",
+    "indent_size": 14,
+    "entry_spacing": "comfortable",
+    "git_status_indicator": true,
+    "show_diagnostics": "errors"
+  },
+  "outline_panel": {
+    "dock": "left",
+    "indent_size": 14
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
+  "icon_theme": {
+    "mode": "system",
+    "light": "Fluent Glass Light Icons",
+    "dark": "Fluent Glass Dark Icons"
+  },
+  "base_keymap": "JetBrains",
+  "git": {
+    "diff_base": "default_branch",
+    "inline_blame": {
+      "delay_ms": 600,
+      "min_column": 100
+    }
+  },
+  "ui_font_size": 19,
+  "buffer_font_size": 17.0,
+  "theme": {
+    "mode": "system",
+    "light": "Fluent Glass Light",
+    "dark": "Fluent Glass Dark"
+  },
+  "buffer_font_family": "Maple Mono NF",
+  "buffer_font_features": {
+    "cv05": true,
+    "cv38": true,
+    "cv02": true,
+    "cv31": true,
+    "cv62": true,
+    "cv65": true,
+    "cv61": true
+  },
+  "buffer_font_fallbacks": [
+    "JetBrains Mono",
+    "SF Mono",
+    "Menlo"
+  ],
+  "buffer_line_height": {
+    "custom": 1.5
+  },
+  "unnecessary_code_fade": 0.15,
+  "wrap_guides": [
+    120
+  ],
+  "vertical_scroll_margin": 6,
+  "indent_guides": {
+    "active_line_width": 2,
+    "coloring": "indent_aware"
+  },
+  "sticky_scroll": {
+    "enabled": true
+  },
+  "semantic_tokens": "combined",
+  "inlay_hints": {
+    "enabled": true,
+    "show_parameter_hints": false,
+    "show_other_hints": false,
+    "show_background": true
+  },
+  "diagnostics": {
+    "inline": {
+      "enabled": true,
+      "min_column": 132,
+      "max_severity": "error"
+    }
+  },
+  "scrollbar": {
+    "diagnostics": "error"
+  },
+  "gutter": {
+    "min_line_number_digits": 3,
+    "git_gutter_width": "default"
+  },
+  "completion_menu_item_kind": "symbol",
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_diagnostics": "errors"
+  },
+  "tab_bar": {
+    "show_nav_history_buttons": false
+  },
+  "toolbar": {
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false
+  },
+  "title_bar": {
+    "show_onboarding_banner": false,
+    "show_user_picture": false,
+    "show_sign_in": false
+  },
+  "active_pane_modifiers": {
+    "border_size": 1.0
+  },
+  "centered_layout": {
+    "left_padding": 0.12,
+    "right_padding": 0.12
+  },
+  "auto_install_extensions": {
+    "biome": true,
+    "csharp": true,
+    "dockerfile": true,
+    "emmet": true,
+    "html": true,
+    "java": true,
+    "sql": true,
+    "terraform": true,
+    "toml": true
+  }
+}

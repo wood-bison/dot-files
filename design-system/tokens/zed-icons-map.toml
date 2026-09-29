@@ -1,0 +1,314 @@
+# ════════════════════════════════════════════════
+# 🎨 Zed icons sink — карта «исходный HEX → роль Cameo»
+# ════════════════════════════════════════════════
+# ЭТО ДАННЫЕ, НЕ КОД — ровно как tokens/zed-map.toml.
+# Новый акцент апстрима = строка здесь, правка
+# build_zed_icons.py не нужна.
+#
+# Иконочная тема Zed НЕ умеет тонировать: в схеме
+# icon_themes/v0.3.0 нет ни одного цветового свойства
+# (IconDefinitionContent = {"path": string}, и всё).
+# Поэтому SVG обязаны быть предраскрашены, а вся тема —
+# это подстановка 16 HEX на 16 ролей Cameo.
+#
+# Собрать:  python3 build_zed_icons.py --out <dir>
+
+[meta]
+schema       = "https://zed.dev/schema/icon_themes/v0.3.0.json"
+family       = "Cameo Icons"                      # IconThemeFamilyContent.name
+author       = "Sergey Zhechko"
+file         = "cameo-icons.json"                 # icon_themes/<file>
+extension_id = "cameo-icons"          # реестр Zed: не менять после публикации
+version      = "1.1.0"   # волна VI: набор изменился содержательно (дуотон у папок)
+
+# Публичный репозиторий расширения. Требование реестра: поле должно
+# РАЗРЕШАТЬСЯ — на PR по нему ходят. Хэндл именно szhechko;
+# github.com/sergeyzhechko отдаёт 404, репозитория с таким владельцем
+# не существует. Тема и иконки не имеют права жить в одном
+# репозитории — это прямое правило prerequisites.md, поэтому у
+# иконок свой.
+repository   = "https://github.com/wood-bison/dot-files"
+
+# Апстрим: установленное расширение, из которого берётся геометрия.
+# Читается ТОЛЬКО на чтение, ничего туда не пишется.
+source_extension = "catppuccin-icons"
+
+# ── Гейт ──────────────────────────────────────────
+# Иконки — non-text content, планка WCAG 1.4.11 = 3:1,
+# а не 1.4.3 = 4.5:1. Меряем против ХУДШЕЙ из двух
+# подложек, на которых иконка реально лежит:
+#   panel.background = bg_soft (дерево проекта)
+#   editor/tab       = bg      (вкладки, хлебные крошки)
+# Сборка падает с exit 1 и НЕ ПИШЕТ НИЧЕГО, если ниже.
+gate_on      = ["bg_soft", "bg"]
+min_contrast = 3.0
+
+
+# ════════════════════════════════════════════════
+#  THEMES — по одной на палитру, порядок значим
+# ════════════════════════════════════════════════
+# Порядок light→dark повторяет [meta].order из zed-map.toml,
+# чтобы обе темы Cameo лежали в JSON одинаково.
+#
+# name — КОНТРАКТ С settings.json: переименуешь, и Zed
+# молча свалится на «Zed (Default)».
+
+[[themes]]
+mode           = "light"        # какую tokens/cameo-*.toml брать
+appearance     = "light"        # AppearanceContent: light | dark
+name           = "Cameo Light"
+dir            = "cameo-light"  # icons/<dir>/*.svg
+source_flavour = "latte"
+source_name    = "Catppuccin Latte"
+
+[[themes]]
+mode           = "dark"
+appearance     = "dark"
+name           = "Cameo Dark"
+dir            = "cameo-dark"
+source_flavour = "mocha"
+source_name    = "Catppuccin Mocha"
+
+
+# ════════════════════════════════════════════════
+#  SOURCE_HEX — что за HEX лежат в исходных SVG
+# ════════════════════════════════════════════════
+# Замерено, а не переписано из доков: 656 SVG на флейвор,
+# все заливки плоские (fill="none" 881×, единственный
+# нехекс-пейнт — url(#a) в poetry-lock.svg).
+# 16 цветных HEX + 2 структурных (см. [structural]).
+# Число справа — сколько раз HEX встречается во флейворе.
+
+[source_hex.latte]
+"#4c4f69" = "text"        # 386
+"#1e66f5" = "blue"        # 150
+"#df8e1d" = "yellow"      # 109
+"#40a02b" = "green"       # 103
+"#8c8fa1" = "overlay1"    #  90
+"#fe640b" = "peach"       #  88
+"#d20f39" = "red"         #  80
+"#8839ef" = "mauve"       #  76
+"#04a5e5" = "sky"         #  63
+"#209fb5" = "sapphire"    #  53
+"#ea76cb" = "pink"        #  37
+"#179299" = "teal"        #  36
+"#e64553" = "maroon"      #  25
+"#7287fd" = "lavender"    #  18
+"#dc8a78" = "rosewater"   #  14
+"#dd7878" = "flamingo"    #   9
+
+[source_hex.mocha]
+"#cdd6f4" = "text"        # 386
+"#89b4fa" = "blue"        # 150
+"#f9e2af" = "yellow"      # 108
+"#a6e3a1" = "green"       # 103
+"#7f849c" = "overlay1"    #  90
+"#fab387" = "peach"       #  88
+"#f38ba8" = "red"         #  80
+"#cba6f7" = "mauve"       #  76
+"#89dceb" = "sky"         #  63
+"#74c7ec" = "sapphire"    #  53
+"#f5c2e7" = "pink"        #  37
+"#94e2d5" = "teal"        #  36
+"#eba0ac" = "maroon"      #  25
+"#b4befe" = "lavender"    #  18
+"#f5e0dc" = "rosewater"   #  14
+"#f2cdcd" = "flamingo"    #   9
+# Протечка апстрима: латтевый yellow в mocha/wally.svg.
+# Лежит внутри <mask style="mask-type:alpha">, то есть
+# работает альфой, а цвет не виден. Подставляем для
+# чистоты остатка, визуального эффекта нет.
+"#df8e1d" = "yellow"      #   1
+
+
+# ════════════════════════════════════════════════
+#  STRUCTURAL — HEX, которые НЕ цвет, а геометрия
+# ════════════════════════════════════════════════
+# Не подставляются. Перечислены явно, чтобы проверка
+# «остаточных HEX» не давала ложной тревоги и чтобы
+# было видно, что именно осталось от апстрима.
+[structural]
+"#fff"     = "clipPath fill (humans.svg) + stop-color радиального градиента (poetry-lock.svg)"
+"#3700ff"  = "заливка alpha-маски (wally.svg) — цвет не рендерится"
+
+
+# ════════════════════════════════════════════════
+#  DUOTONE — фон-чип тем же оттенком под stroke
+# ════════════════════════════════════════════════
+# Волна V (2026-08-25), решение V3 из icon-audit-w5.html.
+# Перед stroke-слоем эмитится скруглённый прямоугольник,
+# залитый ТЕМ же акцентом, что и stroke файла, но прозрачностью
+# ниже порога восприятия «второго цвета»: силуэт читается
+# издалека, плоскость иконки отделяется от дерева панели.
+#
+# Гейт контраста НЕ задет: меряется по-прежнему stroke против
+# подложки панели ([meta].gate_on); чип лежит ПОД штрихом и
+# новых HEX в набор не вводит (тот же акцент, что уже в файле).
+#
+#   light / dark — fill-opacity чипа для соответствующей темы;
+#   на тёмном фоне тот же тинт читается слабее, поэтому там он выше;
+#   exclude_prefixes — имена SVG, которые чипа не получают:
+#     folder* — папка сама крупная цветовая форма, чип дал бы
+#               «пятно на пятне»;
+#     _*      — служебные (_file, _root) не видны в дереве.
+#
+# Геометрия чипа зашита в build_zed_icons.py (16×16 viewBox апстрима):
+#   x=y=1.9, w=h=12.2, rx=2.4 — внутрь рамочных иконок (рамка апстрима
+#   идёт по 1.5 со stroke 1.1, внутренний край ≈2.05) и почти во всю
+#   плашку для бесрамочных силуэтов (docker, git, database).
+
+[duotone]
+light = 0.13
+dark  = 0.17
+# Волна VI: список пуст — плашку получают ВСЕ иконки, включая папки и
+# служебные (_folder — иконка папки по умолчанию, то есть большинство
+# строк дерева; при exclude = ["_"] решение «плашка у всех» применялось
+# бы только к именованным папкам, а рядовые оставались плоскими).
+exclude_prefixes = []
+
+
+# ════════════════════════════════════════════════
+#  OVERLAY — правила, которых у апстрима нет
+# ════════════════════════════════════════════════
+# Единственное место, где Cameo Icons отличается от
+# апстрима не цветом, а поведением. Цели обязаны
+# существовать в file_icons — сборка проверяет.
+#
+# Зачем: в наборе 656 SVG, а ссылок из JSON — на 622.
+# 34 иконки лежат сиротами, и пять из них ровно про
+# ваш стек: angular-component / -directive / -guard /
+# -pipe / -service. Апстрим их не подключает ничем.
+#
+# Механизм проверен по crates/file_icons/src/file_icons.rs:
+#   while let Some((_, suffix)) = typ.split_once('.')
+# для hero.component.ts Zed отрезает первый сегмент и
+# пробует "component.ts". Тем же способом апстрим уже
+# ловит "spec.ts" → typescript-test и "js.map".
+#
+# Java-сироты (java-interface, java-enum, java-record,
+# java-annotation, java-class-abstract/final/sealed)
+# подключить НЕЛЬЗЯ: они различаются содержимым файла,
+# а иконочная тема видит только имя. Оставлены лежать.
+# Сначала ключ: у апстрима SVG лежат, а записи в
+# file_icons на них нет вообще — поэтому одних правил
+# по суффиксу мало. Значение — имя файла в наборе,
+# сборка проверяет, что он существует.
+[overlay.file_icons]
+# Апстрим отгружает SVG, но не заводит на них ключ в JSON — это
+# сироты. Поэтому имя иконки приходится объявлять здесь, иначе
+# ссылка из file_suffixes ни во что не разрешится и сборка упадёт.
+"angular-component" = "angular-component.svg"
+"angular-directive" = "angular-directive.svg"
+"nest-controller"   = "nest-controller.svg"
+"nest-decorator"    = "nest-decorator.svg"
+"nest-filter"       = "nest-filter.svg"
+"nest-gateway"      = "nest-gateway.svg"
+"nest-guard"        = "nest-guard.svg"
+"nest-middleware"   = "nest-middleware.svg"
+"nest-pipe"         = "nest-pipe.svg"
+"nest-service"      = "nest-service.svg"
+
+[overlay.file_suffixes]
+# Zed идёт по цепочке точек: app.module.ts → module.ts → ts. Первое
+# попадание выигрывает, поэтому суффикс из двух сегментов бьёт
+# обычный `ts`.
+#
+# ВНИМАНИЕ, осознанный размен. service/module/guard/pipe — общий
+# словарь Angular и Nest, а карта суффиксов ОДНА на все проекты
+# сразу. Здесь они уведены на Nest: у Nest-репозиториев таких файлов
+# 261, и это основная работа. Расплата — Angular-код (frontend_ui,
+# ~118 файлов) носит Nest-значки. Развернуть обратно — поменять
+# правую часть четырёх строк ниже на angular-*.
+"component.ts"  = "angular-component"   # Angular-эксклюзив, у Nest такого нет
+"directive.ts"  = "angular-directive"   # то же
+"controller.ts" = "nest-controller"
+"decorator.ts"  = "nest-decorator"
+"filter.ts"     = "nest-filter"
+"gateway.ts"    = "nest-gateway"
+"guard.ts"      = "nest-guard"
+"middleware.ts" = "nest-middleware"
+"module.ts"     = "nest"
+"pipe.ts"       = "nest-pipe"
+"service.ts"    = "nest-service"
+# `.env.example` у апстрима есть, а `env.example` без ведущей точки —
+# нет, и цепочка env.example → example не разрешается ни во что.
+"env.example"   = "env"
+
+# Пусто, но секция должна быть: file_stems мержится с
+# дефолтной темой Zed, тут переопределять нечего.
+[overlay.file_stems]
+
+
+# ════════════════════════════════════════════════
+#  ACCENTS — акцент апстрима → роль(и) Cameo
+# ════════════════════════════════════════════════
+# У апстрима 14 акцентов + text + overlay1. У Cameo
+# акцентов семь. Прямых соответствий — девять; ещё
+# семь получаются перцептивной серединой ДВУХ ролей
+# Cameo в OKLab: точка на отрезке между ними, то есть
+# гарантированно внутри гаммы Cameo.
+#
+# ЯКОРЕМ смеси может быть только роль со стабильным
+# СМЫСЛОМ в обеих палитрах: 7 акцентов + fg/dim/subtle/
+# muted. cream и ink меняют полярность между
+# cameo-dark и cameo-light — как якорь непригодны
+# (rosewater уезжает в #503a22).
+#
+# Формы значения ровно две:
+#   role = "gold"                  — роль как есть
+#   mix  = ["moon","teal"], t=0.55 — середина в OKLab
+
+[accents.text]
+role = "fg"                        # тело иконки, 386 попаданий из 1341
+
+[accents.overlay1]
+role = "dim"                       # приглушённые иконки (lock, поверх)
+
+[accents.blue]
+role = "moon"
+
+[accents.teal]
+role = "teal"
+
+[accents.green]
+role = "olive"
+
+[accents.yellow]
+role = "gold"
+
+[accents.peach]
+role = "sand"
+
+[accents.red]
+role = "terra"                     # java.svg у апстрима красный → терракота
+
+[accents.pink]
+role = "rose"
+
+[accents.sapphire]
+mix = ["moon", "teal"]
+t   = 0.55
+
+[accents.sky]
+mix = ["teal", "moon"]
+t   = 0.30
+
+[accents.maroon]
+mix = ["terra", "rose"]
+t   = 0.45
+
+[accents.mauve]
+mix = ["rose", "moon"]
+t   = 0.55
+
+[accents.flamingo]
+mix = ["terra", "sand"]
+t   = 0.45
+
+[accents.lavender]
+mix = ["moon", "subtle"]
+t   = 0.40
+
+[accents.rosewater]
+mix = ["sand", "subtle"]
+t   = 0.45
